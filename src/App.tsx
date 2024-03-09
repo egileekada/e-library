@@ -1,18 +1,18 @@
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
-// import DashboardPage from './pages/dashboard';
-// import DashboardLayout from './components/shared_components/dashboard_layout';
-// import Elibrary from './pages/e_library';
-// import LoginPage from './pages/login';
-// import UserPage from './pages/user';
-// import UserInfo from './pages/user_info';
-// import InventoryPage from './pages/inventory';
-// import GadgetsPage from './pages/gadgets';
-// import EquipmentPage from './pages/equipment';
-// import AdminPage from './pages/personnel';
-// import LibraryPage from './pages/library';
-// import LibraryInfo from './pages/library_info';
-// import PartnerInfo from './pages/partner_info';
-import Home from './pages/home';
+import DashboardPage from './pages/dashboard';
+import DashboardLayout from './components/shared_components/dashboard_layout';
+import Elibrary from './pages/e_library';
+import LoginPage from './pages/login';
+import UserPage from './pages/user';
+import UserInfo from './pages/user_info';
+import InventoryPage from './pages/inventory';
+import GadgetsPage from './pages/gadgets';
+import EquipmentPage from './pages/equipment';
+import AdminPage from './pages/personnel';
+import LibraryPage from './pages/library';
+import LibraryInfo from './pages/library_info';
+import PartnerInfo from './pages/partner_info';
+// import Home from './pages/home';
 
 function App() {
 
@@ -20,9 +20,9 @@ function App() {
 
     createRoutesFromElements(
       <Route path="/">
-        {/* <Route index element={<LoginPage />} /> */}
-        <Route index element={<Home />} />
-        {/* <Route path='/home/info' element={<PartnerInfo />} />
+        {/* <Route index element={<Home />} /> */}
+        <Route index element={<LoginPage />} />
+        <Route path='/home/info' element={<PartnerInfo />} />
         <Route path='/dashboard' element={<DashboardLayout />} >
           <Route path='/dashboard/home' element={<DashboardPage />} />
           <Route path='/dashboard/elibrary' element={<Elibrary />} />
@@ -35,7 +35,7 @@ function App() {
           <Route path='/dashboard/user/info' element={<UserInfo />} />
           <Route path='/dashboard/library/info' element={<LibraryInfo />} />
           <Route path='/dashboard/elibrary/info' element={<PartnerInfo />} />
-        </Route> */}
+        </Route>
       </Route>
     )
   );
