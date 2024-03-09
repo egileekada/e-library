@@ -49,9 +49,7 @@ function Partnertable(props: Props) {
             setPage(data?.data?.page)
             setLimit(data?.data?.limit)
             setTotal(data?.data?.total)
-            setData(data?.data?.data);
-            console.log(data);
-
+            setData(data?.data?.data); 
         }
     })
     return (

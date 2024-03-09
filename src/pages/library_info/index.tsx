@@ -42,8 +42,7 @@ function LibraryInfo(props: Props) {
 
         },
         onSuccess: (data: any) => {
-            setData(data?.data?.data);
-            console.log(data?.data?.data);
+            setData(data?.data?.data); 
 
         }
     })
@@ -74,7 +73,7 @@ function LibraryInfo(props: Props) {
 
                         <Flex as={"button"} alignItems={"center"} gap={"2"} my={"auto"} onClick={() => setOpen(true)} >
                             <ScanIcon />
-                            <Text as={"button"} textAlign={"left"} lineHeight={"19.36px"} fontWeight={"500"} >Qr_code</Text>
+                            <Text textAlign={"left"} lineHeight={"19.36px"} fontWeight={"500"} >Qr_code</Text>
                         </Flex>
                         <Flex mt={"auto"} alignItems={"center"} justifyItems={"center"} gap={"4"} >
                             {data?.status === "NOT_AVAILABLE" && (
