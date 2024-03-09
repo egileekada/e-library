@@ -42,10 +42,7 @@ function UserInfo(props: Props) {
         if (!userId) {
             navigate("/dashboard/user")
         }
-    }, []) 
-
-    console.log(data);
-    
+    }, [])  
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
