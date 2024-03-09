@@ -44,6 +44,9 @@ function UserInfo(props: Props) {
         }
     }, []) 
 
+    console.log(data);
+    
+
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
             <Flex width={"full"} height={"full"} flexDir={"column"} pt={"8"} pb={"4"} >
@@ -59,9 +62,9 @@ function UserInfo(props: Props) {
                     <Box>
                         <Flex gap={"3"} >
                             <Text fontSize={"40px"} lineHeight={"48.41px"} fontWeight={"600"} >{capitalizeFLetter(data?.name)}</Text>
-                            <Box mt={"1"} bgColor={"#FFF8DE"} h={"fit-content"} fontSize={"14px"} lineHeight={"20.3px"} py={"4px"} px={"12px"} rounded={"20px"} >
+                            {/* <Box mt={"1"} bgColor={"#FFF8DE"} h={"fit-content"} fontSize={"14px"} lineHeight={"20.3px"} py={"4px"} px={"12px"} rounded={"20px"} >
                                 Borrowed
-                            </Box>
+                            </Box> */}
                         </Flex>
                         <Text fontSize={"16px"} mt={"3"} lineHeight={"32.4px"} >Joined: <span style={{ fontWeight: "600" }} >{dateFormat(data?.createdAt)}</span></Text>
                         {data?.Borrowing?.length > 0 && (
