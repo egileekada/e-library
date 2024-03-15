@@ -140,7 +140,7 @@ export default function LoginPage() {
                         type="email" placeholder="Email Address" />
                 </Box>
                 <Box>
-                    <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} >Email Address</Text>
+                    <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} >Password</Text>
                     <InputComponent
                         name="password"
                         left={true}
