@@ -226,6 +226,51 @@ function Libraryform(props: Props) {
         setIndex({} as ILibrary)
     }
 
+    const book_categories = [
+        "Literary Fiction",
+        "Mystery",
+        "Romance",
+        "Science Fiction",
+        "Fantasy",
+        "Thriller",
+        "Horror",
+        "Biography/Autobiography",
+        "History",
+        "Memoir",
+        "Self-Help",
+        "Business/Finance",
+        "Science",
+        "Cookbooks",
+        "Travel",
+        "Religion/Spirituality",
+        "Essay/Criticism",
+        "Reference",
+        "Picture Books",
+        "Middle Grade",
+        "Young Adult",
+        "Textbooks",
+        "Research Papers",
+        "Poetry",
+        "Graphic Novels/Comics",
+        "Art/Photography",
+        "Alternate History",
+        "Cyberpunk",
+        "Dystopian",
+        "Space Opera",
+        "Crime",
+        "Detective",
+        "Legal Thriller",
+        "Psychological Thriller",
+        "Contemporary Romance",
+        "Historical Romance",
+        "Paranormal Romance",
+        "Supernatural Horror",
+        "Psychological Horror",
+        "Diet and Nutrition",
+        "Fitness",
+        "Mental Health"
+    ]
+
     return (
         <>
             {!index?.name && (
@@ -245,9 +290,11 @@ function Libraryform(props: Props) {
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Literature Type</Text>
                             <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
-                                <option>Journal</option>
-                                <option>Book</option>
-                                <option>Report</option>
+                                {book_categories?.map((item: string, index: number) => {
+                                    return ( 
+                                        <option key={index} >{item}</option>
+                                    )
+                                })} 
                             </Select>
                         </Box>
                         <Box w={"full"} >
