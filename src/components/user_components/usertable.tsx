@@ -7,6 +7,7 @@ import actionService from '../../connections/getdataaction';
 import filterdata from '../../store/filterdata';
 import { useNavigate } from 'react-router-dom';
 import { capitalizeFLetter } from '../../util/capitalLetter';
+import { formatNumber } from '../../util/numberFormat';
 
 interface Props {
     tableRef: any
@@ -75,6 +76,7 @@ function Usertable(props: Props) {
                             <Th>Staff ID</Th>
                             <Th>Email</Th>
                             <Th>Phone No.</Th>
+                            <Th>Debit</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -93,6 +95,7 @@ function Usertable(props: Props) {
                                     <Td>{item?.staffId ? item?.staffId : "Guest"}</Td>
                                     <Td>{item?.email?.length > 13 ? item?.email.slice(0, 12) + "..." : item?.email}</Td>
                                     <Td>{item?.phone}</Td>
+                                    <Td>{formatNumber(item?.debtBalance)}</Td>
                                 </Tr>
                             )
                         })}

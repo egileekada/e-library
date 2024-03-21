@@ -8,7 +8,8 @@ export interface IUserData {
     staffId: string;
     profilePicture?: string;
     Borrowing?: Array<BorrowData>;
-    createdAt?: string
+    createdAt?: string;
+    debtBalance?: number
 } 
 
 export interface ICreateUser {
