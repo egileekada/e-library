@@ -95,7 +95,7 @@ function Usertable(props: Props) {
                                     <Td>{item?.staffId ? item?.staffId : "Guest"}</Td>
                                     <Td>{item?.email?.length > 13 ? item?.email.slice(0, 12) + "..." : item?.email}</Td>
                                     <Td>{item?.phone}</Td>
-                                    <Td>{formatNumber(item?.debtBalance)}</Td>
+                                    <Td>{formatNumber(item?.debtBalance, true)}</Td>
                                 </Tr>
                             )
                         })}
