@@ -9,7 +9,7 @@ import InputComponent from '../custom_input'
 import Yearselector from '../../../models/yearselector'
 
 interface Props {
-    type: "Gadget" | "Equipment" | "Library"
+    type: "Gadget" | "Equipment" | "Library" | "User"
 }
 
 function Otherfilter(props: Props) {
@@ -20,7 +20,7 @@ function Otherfilter(props: Props) {
 
     const { filter, setFilter } = filterdata((state) => state);
 
-    const datastatus = [ 
+    const datastatus = [
         {
             name: "all",
             value: ""
@@ -36,7 +36,18 @@ function Otherfilter(props: Props) {
         {
             name: "permanenly disabled",
             value: "PERMANENTLY_DISABLED"
-        }, 
+        },
+    ]
+
+    const userstatus = [
+        {
+            name: "all",
+            value: ""
+        },
+        {
+            name: "Debitor",
+            value: "true"
+        }
     ]
 
     const datastate = [
@@ -68,13 +79,13 @@ function Otherfilter(props: Props) {
     }
 
     useEffect(() => {
-        if(path?.pathname !== "/dashboard/library"){
-            setInitialFilter({...filter, status: "ACTIVE"})
+        if (path?.pathname !== "/dashboard/library") {
+            setInitialFilter({ ...filter, status: "ACTIVE" })
         } else {
             setInitialFilter({} as any)
         }
-    }, []) 
- 
+    }, [])
+
 
     return (
         <Box pos={"relative"} >
@@ -84,7 +95,7 @@ function Otherfilter(props: Props) {
             </Button>
             <ModalLayout size={"md"} title={"Filter"} open={show} close={setShow} >
 
-                {path?.pathname !== "/dashboard/library" && (
+                {(path?.pathname !== "/dashboard/library" && path?.pathname !== "/dashboard/user") && (
                     <Flex w={"full"} flexDir={"column"} >
                         <Text fontWeight={"700"} textAlign={"left"} >Status</Text>
                         <Flex mt={"1"} justifyContent={"center"} flexWrap={"wrap"} gap={"3"} >
@@ -100,34 +111,56 @@ function Otherfilter(props: Props) {
                                         <option key={index} value={item?.value} >{item?.name}</option>
                                     )
                                 })}
-                            </Select> 
+                            </Select>
                         </Flex>
                         <Box onClick={() => closeHandler()} fontSize={"14px"} mt={"8"} fontWeight={"700"} mx={"auto"} as='button' >Show results</Box>
-                        <Box onClick={() => setFilter({ status: "active"})} fontSize={"12px"} color={"#676767"} mt={"1"} fontWeight={"400"} mx={"auto"} as='button' >Clear all</Box>
+                        <Box onClick={() => setFilter({ status: "active" })} fontSize={"12px"} color={"#676767"} mt={"1"} fontWeight={"400"} mx={"auto"} as='button' >Clear all</Box>
+                    </Flex>
+                )}
+                {path?.pathname === "/dashboard/user" && (
+                    <Flex w={"full"} flexDir={"column"} >
+                        <Text fontWeight={"700"} textAlign={"left"} >Status</Text>
+                        <Flex mt={"1"} justifyContent={"center"} flexWrap={"wrap"} gap={"3"} >
+                            <Select
+                                onChange={(e) => setInitialFilter({ ...initialFilter, debtors: e.target.value })}
+                                fontSize={"14px"} value={initialFilter?.state} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                                {/* <option value={""} >Select Status</option> */}
+                                {userstatus?.map((item: {
+                                    name: string,
+                                    value: string
+                                }, index: number) => {
+                                    return (
+                                        <option key={index} value={item?.value} >{item?.name}</option>
+                                    )
+                                })}
+                            </Select>
+                        </Flex>
+                        <Box onClick={() => closeHandler()} fontSize={"14px"} mt={"8"} fontWeight={"700"} mx={"auto"} as='button' >Show results</Box>
+                        <Box onClick={() => setFilter({ status: "active" })} fontSize={"12px"} color={"#676767"} mt={"1"} fontWeight={"400"} mx={"auto"} as='button' >Clear all</Box>
                     </Flex>
                 )}
                 {path?.pathname === "/dashboard/library" && (
                     <Flex w={"full"} flexDir={"column"} gap={"3"} >
                         <Box w={"full"} >
-                            <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >State</Text> 
+                            <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >State</Text>
 
-                            <RadioGroup onChange={(e)=> setInitialFilter({ ...initialFilter, state: e})} value={initialFilter?.state}>
+                            <RadioGroup onChange={(e) => setInitialFilter({ ...initialFilter, state: e })} value={initialFilter?.state}>
                                 <Stack direction='row'>
-                                {datastate?.map((item: {
-                                    name: string,
-                                    value: string
-                                }, index: number) => {
-                                    return (
-                                        <Radio key={index} value={item?.value} >{item?.name}</Radio>
-                                    )
-                                })} 
+                                    {datastate?.map((item: {
+                                        name: string,
+                                        value: string
+                                    }, index: number) => {
+                                        return (
+                                            <Radio key={index} value={item?.value} >{item?.name}</Radio>
+                                        )
+                                    })}
                                 </Stack>
                             </RadioGroup>
                         </Box>
                         <Box w={"full"} >
                             <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >Enter Author</Text>
                             <InputComponent onChange={(e: any) => setInitialFilter({ ...initialFilter, author: e.target.value })} value={initialFilter?.author} type='text' />
-                        </Box> 
+                        </Box>
                         <Box w={"full"} >
                             <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >Enter ISBN</Text>
                             <InputComponent onChange={(e: any) => setInitialFilter({ ...initialFilter, isbn: e.target.value })} value={initialFilter?.isbn} type='text' />

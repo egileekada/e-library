@@ -30,9 +30,9 @@ function Filter(props: Props) {
                 <Box w={"50%"} >
                     <Searchbar />
                 </Box>
-                {(path?.pathname === "/dashboard/library" || path?.pathname === "/dashboard/inventory/gadgets" || path?.pathname === "/dashboard/inventory/equipments") && (
+                {(path?.pathname === "/dashboard/library" || path?.pathname === "/dashboard/inventory/gadgets" || path?.pathname === "/dashboard/inventory/equipments" || path?.pathname === "/dashboard/user") && (
                     <Otherfilter type={path?.pathname === "/dashboard/inventory/gadgets" ? "Gadget" : path?.pathname === "/dashboard/inventory/equipments" ? "Equipment" : "Library"} />
-                )}
+                )} 
 
                 {(path?.pathname !== "/dashboard/elibrary" && path?.pathname !== "/dashboard/library") && ( 
                     <CSVLink data={data ? data : []} 

@@ -8,7 +8,8 @@ type State = {
         isbn?: string
         issn?: string
         publicationYear?: string
-        author?: string 
+        author?: string
+        debtors?: string
     },
 } 
 

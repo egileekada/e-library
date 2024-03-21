@@ -8,6 +8,7 @@ import filterdata from '../../store/filterdata';
 import { useNavigate } from 'react-router-dom';
 import { capitalizeFLetter } from '../../util/capitalLetter';
 import { formatNumber } from '../../util/numberFormat';
+import { cleanup } from '../../util/cleanup';
 
 interface Props {
     tableRef: any
@@ -32,12 +33,13 @@ function Usertable(props: Props) {
     const toast = useToast()
     const navigate = useNavigate()
 
-    const { search } = filterdata((state) => state);
+    const { search, filter } = filterdata((state) => state);
 
     focusManager.setFocused(false)
 
-    const { isLoading, isRefetching } = useQuery(['usertable', search, page, limit], () => actionService.getservicedata(search ? `/user/search?keyword=${search}` : "/user",
+    const { isLoading, isRefetching } = useQuery(['usertable', search, page, limit], () => actionService.getservicedata((search || filter?.debtors)? `/user/search?keyword=${search}` : "/user",
         {
+            ...cleanup(filter),
             page: page,
             limit: limit
         }), {
