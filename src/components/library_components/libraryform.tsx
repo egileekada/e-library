@@ -289,35 +289,49 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Literature Type</Text>
-                            <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
-                                {book_categories?.map((item: string, index: number) => {
-                                    return ( 
-                                        <option key={index} >{item}</option>
-                                    )
-                                })} 
+                            <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}> 
+                                <option>Journal</option>
+                                <option>Book</option>
+                                <option>Report</option>
                             </Select>
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text>
-                            <InputComponent
+                            {/* <InputComponent
                                 name="value"
                                 onChange={formik.handleChange}
                                 onFocus={() =>
                                     formik.setFieldTouched("value", true, true)
                                 }
                                 touch={formik.touched.value}
-                                error={formik.errors.value} placeholder="" type='text' />
+                                error={formik.errors.value} placeholder="" type='text' /> */}
+
+                            <Select placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
+                                <option>Less than N20,000</option>
+                                <option>20,000 - N40,000</option> 
+                                <option>N40,000 - N60,000</option>
+                                <option>N60,000 - N80,000</option>
+                                <option>N80,000 - N100,000</option>
+                                <option>Above 100,000</option> 
+                            </Select>
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text>
-                            <InputComponent
+                            {/* <InputComponent
                                 name="category"
                                 onChange={formik.handleChange}
                                 onFocus={() =>
                                     formik.setFieldTouched("category", true, true)
                                 }
                                 touch={formik.touched.category}
-                                error={formik.errors.category} placeholder="" type='text' />
+                                error={formik.errors.category} placeholder="" type='text' /> */}
+                            <Select placeholder='Select Category' onChange={(e) => formik.setFieldValue("category", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                                {book_categories?.map((item: string, index: number) => {
+                                    return (
+                                        <option key={index} >{item}</option>
+                                    )
+                                })}
+                            </Select>
                         </Box>
                         {type === "Book" && (
                             <Box w={"full"} >

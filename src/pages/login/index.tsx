@@ -7,7 +7,7 @@ import InputComponent from "../../components/shared_components/custom_input";
 import { LoginDataType, useLoginCallback } from "../../connections/useauth";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import { Eye, Lock, Mail } from "../../components/shared_components/svg";
+import { Eye, Lock, Logo, Mail } from "../../components/shared_components/svg";
 
 
 export default function LoginPage() {
@@ -121,9 +121,12 @@ export default function LoginPage() {
                 <Image src="/login.jpg" alt="login" width={"full"} height={"full"} objectFit={"cover"} />
                 {/* <img className=" w-full h-full object-cover " alt="lgin" src="/login.jpg" /> */}
             </Flex>
-            <Flex w={"full"} height={"100vh"}  px={"6"} justifyContent={"center"} alignItems={"center"} >
+            <Flex w={"full"} height={"100vh"} px={"6"} justifyContent={"center"} alignItems={"center"} >
 
                 <form onSubmit={(e) => submit(e)} style={{ maxWidth: "500px", width: "100%", display: "flex", flexDirection: "column", gap: "16px", borderRadius: "30px", padding: "50px" }} >
+                    <Flex w={"full"} justifyContent={"center"} mb={"2"}  >
+                        <Logo />
+                    </Flex>
                     <Text fontSize={"35px"} lineHeight={"42.36px"} textAlign={"center"} fontWeight={"bold"} >Log In</Text>
                     <Box>
                         <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} >Email Address</Text>

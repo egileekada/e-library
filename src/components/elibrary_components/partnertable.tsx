@@ -42,8 +42,7 @@ function Partnertable(props: Props) {
                 status: "error",
                 title: "Error occured",
             });
-            console.log(error);
-
+            console.log(error); 
         },
         onSuccess: (data: any) => {
             setPage(data?.data?.page)
@@ -52,6 +51,7 @@ function Partnertable(props: Props) {
             setData(data?.data?.data); 
         }
     })
+    
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} > 
             <Grid templateColumns='repeat(3, 1fr)' gap={4} py={"4"}>
