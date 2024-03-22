@@ -34,6 +34,10 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
+        },
+        {
+            name: "Debitor",
+            router: "/dashboard/debit"
         }
     ]
 
@@ -61,6 +65,10 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
+        },
+        {
+            name: "Debitor",
+            router: "/dashboard/debit"
         }
     ]
 

@@ -1,12 +1,11 @@
-import { Box, Flex, Image, Text, Button, Spinner, useToast} from '@chakra-ui/react'
+import { Box, Flex, Image, Text, Button, Spinner, useToast } from '@chakra-ui/react'
 import { PinIcon } from '../shared_components/svg'
 import { IPartner } from '../../models'
 import { useNavigate } from 'react-router-dom'
 import Updateform from './update_form'
 import { usePinCallback } from '../../connections/useaction'
 import { useMutation, useQueryClient } from 'react-query'
-import { capitalizeFLetter } from '../../util/capitalLetter'
-// import React from 'react' 
+import { capitalizeFLetter } from '../../util/capitalLetter' 
 
 function Tiles(props: IPartner) {
     const {
@@ -45,7 +44,8 @@ function Tiles(props: IPartner) {
                 position: "top",
             });
 
-            queryClient.invalidateQueries(['partnertable']) 
+            queryClient.invalidateQueries(['partnertable'])
+            queryClient.invalidateQueries(['/partner/filter'])
 
             return response;
         } else if (response?.data?.statusCode === 400) {
@@ -59,34 +59,34 @@ function Tiles(props: IPartner) {
         }
     });
 
-    const pinHandler =()=> {
+    const pinHandler = () => {
 
         pinMutation.mutateAsync()
-        .catch(() => {
-            toast({
-                title: "Something went wrong",
-                status: "error",
-                duration: 3000,
-                position: "top",
+            .catch(() => {
+                toast({
+                    title: "Something went wrong",
+                    status: "error",
+                    duration: 3000,
+                    position: "top",
+                });
             });
-        });
     }
 
     return (
         <Box w={"full"} textAlign={"left"} pos={"relative"} p={"4"} >
-            <Flex justifyContent={"center"} alignItems={"center"} w={"30px"} pt={"2px"} pr={"2px"} h={"30px"} rounded={"full"} bgColor={pinned ? "#1F7CFF1A" : ""}  onClick={()=> pinHandler()} as='button' position={"absolute"} right={"3"} top={"3"} >
+            <Flex justifyContent={"center"} alignItems={"center"} w={"30px"} pt={"2px"} pr={"2px"} h={"30px"} rounded={"full"} bgColor={pinned ? "#1F7CFF1A" : ""} onClick={() => pinHandler()} as='button' position={"absolute"} right={"3"} top={"3"} >
                 {pinMutation?.isLoading && (
                     <Spinner size={"sm"} />
                 )}
                 {!pinMutation?.isLoading && (
-                    <PinIcon color={pinned ? "#3C41F0" : ""}  />
+                    <PinIcon color={pinned ? "#3C41F0" : ""} />
                 )}
             </Flex>
             <Flex w={"full"} gap={"2"} alignItems={"end"} >
 
                 <Box w={"80px"} h={"auto"} bgColor="gray" borderWidth={"3px"} rounded={"12px"}  >
                     <Image w={"full"} h={"full"} rounded={"12px"} src={imageUrl} objectFit={"contain"} alt='parnter' />
-                </Box> 
+                </Box>
             </Flex>
             <Text color={"#1E1B39"} lineHeight={"21.7px"} fontSize={"18px"} fontWeight={"600"} mt={"4"} >{capitalizeFLetter(partnerName)}</Text>
             <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >Partner: {partnerResourceName}</Text>

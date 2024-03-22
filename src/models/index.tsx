@@ -76,7 +76,7 @@ export interface IPartner {
     imageUrl?: string, 
     id?: string | number,
     createdAt?: string,
-    pinned?: boolean
+    pinned?: boolean, 
 }  
 
 export interface IBorrow {
