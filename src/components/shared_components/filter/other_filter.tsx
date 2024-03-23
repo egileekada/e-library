@@ -18,7 +18,7 @@ function Otherfilter(props: Props) {
     const [show, setShow] = useState(false)
     const [initialFilter, setInitialFilter] = useState({} as any)
 
-    const { filter, setFilter } = filterdata((state) => state);
+    const { setFilter } = filterdata((state) => state);
 
     const datastatus = [
         {
@@ -82,7 +82,7 @@ function Otherfilter(props: Props) {
         // if (path?.pathname !== "/dashboard/library") {
         //     setInitialFilter({ ...filter, status: "ACTIVE" })
         // } else {
-        //     setInitialFilter({} as any)
+            setInitialFilter({} as any)
         // }
     }, [])
 

@@ -129,7 +129,7 @@ function UserInfo(props: Props) {
                                 )}
                             </>
                         )}
-                        {data?.debtBalance && ( 
+                        {(data?.debtBalance !== 0) && ( 
                             <Button onClick={()=> setOpen(true)} h={"45px"} mt="6" rounded={ "5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
                                 Clear {formatNumber(data?.debtBalance, true)} Debit
                             </Button>

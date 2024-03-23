@@ -9,21 +9,22 @@ import { useQueryClient, useMutation } from 'react-query';
 import { useAddBookCallback, useAddJornalCallback, useAddReportCallback, useUploaderCallback } from '../../connections/useaction';
 import { ILibrary } from '../../models';
 import Yearselector from '../../models/yearselector';
-import Qrcode from '../shared_components/qrcode';
+// import Qrcode from '../shared_components/qrcode';
+import QrcodeMultiple from '../shared_components/qrcodemultiple';
 
 interface Props {
-    close?: any
+    close?: any, 
 }
 
 function Libraryform(props: Props) {
     const {
-        close
+        close, 
     } = props
 
     const [imageFile, setImageFile] = useState("");
     const [type, setType] = useState("Journal");
 
-    const [index, setIndex] = useState({} as ILibrary)
+    const [index, setIndex] = useState(Array<ILibrary>)
 
 
     const [otherData, setOtherData] = useState({} as {
@@ -92,11 +93,8 @@ function Libraryform(props: Props) {
                 position: "top",
             });
 
-            queryClient.invalidateQueries(['librarytable'])
-            setIndex({ ...index, id: response?.data?.data?.id, name: response?.data?.data?.name });
-
-            console.log(response?.data?.data);
-
+            queryClient.invalidateQueries(['librarytable']) 
+            setIndex(response?.data?.data);
 
             return response;
         } else if (response?.data?.statusCode === 400) {
@@ -223,7 +221,7 @@ function Libraryform(props: Props) {
 
     const clickHandler = (item: boolean) => {
         close(item)
-        setIndex({} as ILibrary)
+        setIndex([])
     }
 
     const book_categories = [
@@ -273,7 +271,7 @@ function Libraryform(props: Props) {
 
     return (
         <>
-            {!index?.name && (
+            {!index[0]?.name && (
                 <form style={{ width: "full" }} onSubmit={(e) => submit(e)} >
                     <Flex w={"full"} gap={"4"} flexDir={"column"} pb={"4"} >
                         <Box w={"full"} >
@@ -441,8 +439,8 @@ function Libraryform(props: Props) {
                     </Flex>
                 </form>
             )}
-            {index?.name && (
-                <Qrcode setOpen={clickHandler} type={index?.name} id={index?.id + ""} />
+            {index[0]?.name && (
+                <QrcodeMultiple setOpen={clickHandler} data={index} />
             )}
         </>
     )
