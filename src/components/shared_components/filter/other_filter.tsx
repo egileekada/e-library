@@ -83,8 +83,9 @@ function Otherfilter(props: Props) {
         //     setInitialFilter({ ...filter, status: "ACTIVE" })
         // } else {
             setInitialFilter({} as any)
+            setFilter({} as any)
         // }
-    }, [])
+    }, [path?.pathname])
 
     console.log(initialFilter);
     
