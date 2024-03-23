@@ -39,10 +39,11 @@ function Usertable(props: Props) {
 
     const { isLoading, isRefetching } = useQuery(['usertable', search, page, limit, filter?.debtors], () => actionService.getservicedata((search || filter?.debtors)? `/user/search` : "/user",
         {
-            ...cleanup(filter),
-            page: page,
-            limit: limit,
-            // keyword: search ?? ""
+            ...cleanup({...filter,
+                page: page,
+                limit: limit,
+                keyword: search
+            }), 
         }), {
         onError: (error: any) => {
             toast({
