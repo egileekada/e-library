@@ -12,7 +12,7 @@ import Yearselector from '../../models/yearselector';
 import Qrcode from '../shared_components/qrcode';
 
 interface Props {
-    close: (by: boolean) => void
+    close?: any
 }
 
 function Libraryform(props: Props) {
@@ -47,7 +47,7 @@ function Libraryform(props: Props) {
         name: yup.string().required('required'),
         description: yup.string().required('required'),
         author: yup.string().required('required'),
-        count: yup.string().required('required'),
+        count: yup.number().required('required'),
         publicationYear: yup.string().required('required'),
         language: yup.string().required('required'),
         category: yup.string().required('required'),
@@ -60,7 +60,7 @@ function Libraryform(props: Props) {
             name: "",
             description: "",
             author: "",
-            count: "1",
+            count: 0,
             publicationYear: "",
             language: "",
             category: "",
@@ -81,10 +81,7 @@ function Libraryform(props: Props) {
             response = await handleAddBook(formData);
         } else {
             response = await handleAddReport(formData);
-        }
-
-
-        console.log(response?.data?.message);
+        } 
 
         if (response?.status === 201 || response?.status === 200) {
 
@@ -98,7 +95,7 @@ function Libraryform(props: Props) {
             queryClient.invalidateQueries(['librarytable'])
             setIndex({ ...index, id: response?.data?.data?.id, name: response?.data?.data?.name });
 
-            console.log(response);
+            console.log(response?.data?.data);
 
 
             return response;
@@ -163,6 +160,7 @@ function Libraryform(props: Props) {
             value: formik.values.value,
             publicationYear: formik.values.publicationYear,
             language: formik.values.language,
+            count: Number(formik.values.count),
             category: formik.values.category,
             ISSN: otherData?.ISSN,
             DOI: otherData?.DOI
@@ -173,6 +171,7 @@ function Libraryform(props: Props) {
             description: formik.values.description,
             author: formik.values.author,
             value: formik.values.value,
+            count: Number(formik.values.count),
             publicationYear: formik.values.publicationYear,
             language: formik.values.language,
             category: formik.values.category,
@@ -184,6 +183,7 @@ function Libraryform(props: Props) {
             description: formik.values.description,
             author: formik.values.author,
             value: formik.values.value,
+            count: Number(formik.values.count),
             publicationYear: formik.values.publicationYear,
             language: formik.values.language,
             category: formik.values.category,
@@ -296,35 +296,18 @@ function Libraryform(props: Props) {
                             </Select>
                         </Box>
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text>
-                            {/* <InputComponent
-                                name="value"
-                                onChange={formik.handleChange}
-                                onFocus={() =>
-                                    formik.setFieldTouched("value", true, true)
-                                }
-                                touch={formik.touched.value}
-                                error={formik.errors.value} placeholder="" type='text' /> */}
-
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text> 
                             <Select placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
-                                <option>Less than N20,000</option>
-                                <option>20,000 - N40,000</option> 
-                                <option>N40,000 - N60,000</option>
-                                <option>N60,000 - N80,000</option>
-                                <option>N80,000 - N100,000</option>
-                                <option>Above 100,000</option> 
+                                <option>Less than ₦20,000</option>
+                                <option>₦20,000 - ₦40,000</option> 
+                                <option>N40,000 - ₦60,000</option>
+                                <option>₦60,000 - ₦80,000</option>
+                                <option>₦80,000 - ₦100,000</option>
+                                <option>Above ₦100,000</option> 
                             </Select>
                         </Box>
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text>
-                            {/* <InputComponent
-                                name="category"
-                                onChange={formik.handleChange}
-                                onFocus={() =>
-                                    formik.setFieldTouched("category", true, true)
-                                }
-                                touch={formik.touched.category}
-                                error={formik.errors.category} placeholder="" type='text' /> */}
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text> 
                             <Select placeholder='Select Category' onChange={(e) => formik.setFieldValue("category", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 {book_categories?.map((item: string, index: number) => {
                                     return (
@@ -332,6 +315,17 @@ function Libraryform(props: Props) {
                                     )
                                 })}
                             </Select>
+                        </Box>
+                        <Box w={"full"} >
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Number Of Books</Text> 
+                            <InputComponent
+                                name="count"
+                                onChange={formik.handleChange}
+                                onFocus={() =>
+                                    formik.setFieldTouched("count", true, true)
+                                }
+                                touch={formik.touched.count}
+                                error={formik.errors.count} placeholder="Number Of Books" type='number' />
                         </Box>
                         {type === "Book" && (
                             <Box w={"full"} >

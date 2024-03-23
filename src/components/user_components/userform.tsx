@@ -3,7 +3,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup'
 import InputComponent from '../shared_components/custom_input'
 import ImageSelector from '../shared_components/image_selector'
-import { useAddUserCallback, useUploaderCallback } from '../../connections/useaction'
+import { useAddUserCallback, useAddUserGuestCallback, useUploaderCallback } from '../../connections/useaction'
 import { useMutation, useQueryClient } from 'react-query';
 import { ICreateUser } from '../../models';
 import { useState } from 'react';
@@ -25,6 +25,9 @@ function Userform(props: Props) {
     const [department, setDepartment] = useState("")
     const toast = useToast()
     const { handleAddUser } = useAddUserCallback();
+
+    const { handleAddUserGuest } = useAddUserGuestCallback()
+
     const { handleUploader } = useUploaderCallback()
     const [imageFile, setImageFile] = useState("");
     const loginSchema = yup.object({
@@ -46,7 +49,7 @@ function Userform(props: Props) {
 
     //API call to handle adding user
     const addUserMutation = useMutation(async (formData: ICreateUser) => {
-        const response = await handleAddUser(formData); 
+        const response = await handleAddUser(formData);
 
         if (response?.status === 201 || response?.status === 200) {
 
@@ -68,42 +71,23 @@ function Userform(props: Props) {
                 position: "top",
             });
             return
-        }  
+        }
     });
 
     //API call to handle adding user
-    const uploaderMutation = useMutation(async (userdata: ICreateUser) => {
-
-        let formData = new FormData()
-        formData.append("file", imageFile)
-
-        const response = await handleUploader(formData, imageFile); 
+    const addUserGuestMutation = useMutation(async (formData: ICreateUser) => {
+        const response = await handleAddUserGuest(formData);
 
         if (response?.status === 201 || response?.status === 200) {
 
-            // toast({
-            //     title: response?.data?.message,
-            //     status: "success",
-            //     duration: 3000,
-            //     position: "top",
-            // });
+            toast({
+                title: response?.data?.message,
+                status: "success",
+                duration: 3000,
+                position: "top",
+            });
 
-            addUserMutation.mutateAsync({...userdata, profilePicture: response?.data?.data}, {
-                onSuccess: (data: any) => {
-                    if (data) {
-                        close(false)
-                    }
-                },
-            })
-                .catch(() => {
-                    toast({
-                        title: "Something went wrong",
-                        status: "error",
-                        duration: 3000,
-                        position: "top",
-                    });
-                });
- 
+            queryClient.invalidateQueries(['usertable'])
 
             return response;
         } else if (response?.data?.statusCode === 400) {
@@ -114,7 +98,73 @@ function Userform(props: Props) {
                 position: "top",
             });
             return
-        }  
+        }
+    });
+
+    //API call to handle adding user
+    const uploaderMutation = useMutation(async (userdata: ICreateUser) => {
+
+        let formData = new FormData()
+        formData.append("file", imageFile)
+
+        const response = await handleUploader(formData, imageFile);
+
+        if (response?.status === 201 || response?.status === 200) {
+
+            // toast({
+            //     title: response?.data?.message,
+            //     status: "success",
+            //     duration: 3000,
+            //     position: "top",
+            // });
+            if (role === "Staff") {
+
+                addUserMutation.mutateAsync({ ...userdata, profilePicture: response?.data?.data }, {
+                    onSuccess: (data: any) => {
+                        if (data) {
+                            close(false)
+                        }
+                    },
+                })
+                    .catch(() => {
+                        toast({
+                            title: "Something went wrong",
+                            status: "error",
+                            duration: 3000,
+                            position: "top",
+                        });
+                    });
+
+            } else {
+
+                addUserGuestMutation.mutateAsync({ ...userdata, profilePicture: response?.data?.data }, {
+                    onSuccess: (data: any) => {
+                        if (data) {
+                            close(false)
+                        }
+                    },
+                }).catch(() => {
+                    toast({
+                        title: "Something went wrong",
+                        status: "error",
+                        duration: 3000,
+                        position: "top",
+                    });
+                });
+
+            }
+
+
+            return response;
+        } else if (response?.data?.statusCode === 400) {
+            toast({
+                title: response?.data?.message,
+                status: "error",
+                duration: 3000,
+                position: "top",
+            });
+            return
+        }
     });
 
 

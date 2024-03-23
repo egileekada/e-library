@@ -79,12 +79,15 @@ function Otherfilter(props: Props) {
     }
 
     useEffect(() => {
-        if (path?.pathname !== "/dashboard/library") {
-            setInitialFilter({ ...filter, status: "ACTIVE" })
-        } else {
-            setInitialFilter({} as any)
-        }
+        // if (path?.pathname !== "/dashboard/library") {
+        //     setInitialFilter({ ...filter, status: "ACTIVE" })
+        // } else {
+        //     setInitialFilter({} as any)
+        // }
     }, [])
+
+    console.log(initialFilter);
+    
 
 
     return (
@@ -123,7 +126,7 @@ function Otherfilter(props: Props) {
                         <Flex mt={"1"} justifyContent={"center"} flexWrap={"wrap"} gap={"3"} >
                             <Select
                                 onChange={(e) => setInitialFilter({ ...initialFilter, debtors: e.target.value })}
-                                fontSize={"14px"} value={initialFilter?.state} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                                fontSize={"14px"} value={initialFilter?.debtors} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 {/* <option value={""} >Select Status</option> */}
                                 {userstatus?.map((item: {
                                     name: string,

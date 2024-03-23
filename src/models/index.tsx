@@ -7,7 +7,7 @@ export interface IUserData {
     phone: string;
     staffId: string;
     profilePicture?: string;
-    Borrowing?: Array<BorrowData>;
+    Borrowing?: any;
     createdAt?: string;
     debtBalance?: number
 } 
@@ -92,7 +92,7 @@ export interface ILibrary {
     author?: string,
     thumbnail?: string, 
     authors?: Array<string>, 
-    count?: string, 
+    count?: number, 
     publicationYear?: string, 
     language?: string, 
     category?: string, 

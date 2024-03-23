@@ -45,7 +45,7 @@ function Borrowtable(props: Props) {
                     Satisfactory
                 </Flex>
             )
-        } else if (item === "DAMAGE") {
+        } else if (item === "DAMAGED") {
             return (
                 <Flex width={"180px"} rounded={"10px"} color={"#450000"} height={"30px"} lineHeight={"16.94px"} fontSize={"14px"} justifyContent={"center"} alignItems={"center"} bgColor={"#FFDEDE"} >
                     Damaged

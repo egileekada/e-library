@@ -34,11 +34,7 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
-        },
-        {
-            name: "Debitor",
-            router: "/dashboard/debit"
-        }
+        } 
     ]
 
     const adminlist = [
@@ -65,11 +61,7 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
-        },
-        {
-            name: "Debitor",
-            router: "/dashboard/debit"
-        }
+        } 
     ]
 
     useEffect(() => {

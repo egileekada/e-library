@@ -37,11 +37,12 @@ function Usertable(props: Props) {
 
     focusManager.setFocused(false)
 
-    const { isLoading, isRefetching } = useQuery(['usertable', search, page, limit], () => actionService.getservicedata((search || filter?.debtors)? `/user/search?keyword=${search}` : "/user",
+    const { isLoading, isRefetching } = useQuery(['usertable', search, page, limit, filter?.debtors], () => actionService.getservicedata((search || filter?.debtors)? `/user/search` : "/user",
         {
             ...cleanup(filter),
             page: page,
-            limit: limit
+            limit: limit,
+            // keyword: search ?? ""
         }), {
         onError: (error: any) => {
             toast({

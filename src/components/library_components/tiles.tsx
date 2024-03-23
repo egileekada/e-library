@@ -62,7 +62,7 @@ function Tiles(props: ILibrary) {
             {IDNumber && (
                 <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >ID Number: {IDNumber}</Text>
             )}
-            <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >Value: ₦{value}</Text>
+            <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >Value: {value}</Text>
             <Flex gap={"4"} h={"60px"} alignItems={"end"} mt={"auto"} >
                 <Button onClick={clickHandler} h={"45px"} gap={"3"} rounded={"5px"} width={"full"} bgColor={"#1F7CFF0D"} _hover={{ backgroundColor: "#1F7CFF0D" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"#597AB8"} >
                     <Box w={"fit-content"} >

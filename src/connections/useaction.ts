@@ -15,6 +15,21 @@ export function useAddUserCallback() {
   return { handleAddUser }
 }
 
+export function useAddUserGuestCallback() {
+  const handleAddUserGuest = async (postData: object): Promise<any> => {
+    try {
+      const response = await axios.post("/user/create/guest", postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleAddUserGuest }
+}
+
 export function useAddAdminCallback() {
   const handleAddAdmin = async (postData: object): Promise<any> => {
     try {
@@ -73,6 +88,21 @@ export function useUpdatePartnerCallback() {
     }
   }
   return { handleUpdatePartner }
+}
+
+export function useClearDebitCallback() {
+  const handleClearDebit = async (index: string | number, postData: object): Promise<any> => {
+    try {
+      const response = await axios.put("/debt/clear-amount/"+index, postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleClearDebit }
 }
 
 export function useDeleteRecordCallback() {

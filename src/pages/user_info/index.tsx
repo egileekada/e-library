@@ -1,13 +1,18 @@
-import { Box, Flex, Image, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Text, useToast } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { RightArrow } from '../../components/shared_components/svg'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import actionService from '../../connections/getdataaction'
 import LoadingAnimation from '../../components/shared_components/loading_animation'
 import Borrowtable from '../../components/user_components/borrowtable'
 import { dateFormat } from '../../util/dateFormat'
 import { useNavigate } from 'react-router-dom'
 import { capitalizeFLetter } from '../../util/capitalLetter'
+import ModalLayout from '../../components/shared_components/modal_layout'
+import { IUserData } from '../../models' 
+import InputComponent from '../../components/shared_components/custom_input'
+import { useClearDebitCallback } from '../../connections/useaction'
+import { formatNumber } from '../../util/numberFormat'
 
 interface Props { }
 
@@ -15,16 +20,19 @@ function UserInfo(props: Props) {
     const { } = props
 
     const toast = useToast()
-    const [data, setData] = useState({} as any)
+    const [data, setData] = useState({} as IUserData)
+    const [open, setOpen] = useState(false)
+    const [debitAmount, setDebitAmount] = useState(0)
+
+    const { handleClearDebit } = useClearDebitCallback()
 
     const userId = localStorage.getItem("currentuser")
 
-    const navigate = useNavigate()
-
+    const navigate = useNavigate() 
 
     // const param
 
-    const { isLoading, isRefetching } = useQuery(['userindex', userId], () => actionService.getservicedata(`/user/singleUser/${userId}`), {
+    const { isLoading, isRefetching, refetch } = useQuery(['userindex', userId], () => actionService.getservicedata(`/user/singleUser/${userId}`), {
         onError: (error: any) => {
             toast({
                 status: "error",
@@ -42,7 +50,54 @@ function UserInfo(props: Props) {
         if (!userId) {
             navigate("/dashboard/user")
         }
-    }, [])  
+    }, []) 
+
+    //API call to handle adding user
+    const clearDebitMutation = useMutation(async (debitdata: {amount: number}) => { 
+
+        const response = await handleClearDebit(data?.id ?? "", debitdata);
+
+        if (response?.status === 201 || response?.status === 200) { 
+            
+            console.log(response);
+            toast({
+                title: "Successful",
+                status: "success",
+                duration: 3000,
+                position: "top",
+            });
+
+            return response;
+        } else if (response?.data?.statusCode === 400) {
+            toast({
+                title: response?.data?.message,
+                status: "error",
+                duration: 3000,
+                position: "top",
+            });
+            return
+        }
+    });
+
+    const clickHandler =()=> {
+
+        clearDebitMutation.mutateAsync({amount: Number(debitAmount)}, {
+            onSuccess: (data: any) => {
+                if (data) {
+                    refetch()
+                    setOpen(false)
+                }
+            },
+        })
+            .catch(() => {
+                toast({
+                    title: "Something went wrong",
+                    status: "error",
+                    duration: 3000,
+                    position: "top",
+                });
+            });
+    }
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
@@ -67,12 +122,17 @@ function UserInfo(props: Props) {
                         {data?.Borrowing?.length > 0 && (
                             <>
                                 {data?.Borrowing[0]?.record?.status === "NOT_AVAILABLE" && (
-                                    <> 
+                                    <>
                                         <Text fontSize={"16px"} lineHeight={"32.4px"} >Borrowed: <span style={{ fontWeight: "600" }} >{data?.Borrowing[0]?.record?.name}</span></Text>
                                         <Text fontSize={"16px"} lineHeight={"32.4px"} >To Be Returned: <span style={{ fontWeight: "600" }} >{dateFormat(data?.Borrowing[0]?.endDate)}</span></Text>
                                     </>
                                 )}
                             </>
+                        )}
+                        {data?.debtBalance && ( 
+                            <Button onClick={()=> setOpen(true)} h={"45px"} mt="6" rounded={ "5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
+                                Clear {formatNumber(data?.debtBalance, true)} Debit
+                            </Button>
                         )}
                     </Box>
                 </Flex>
@@ -84,6 +144,17 @@ function UserInfo(props: Props) {
                     <Text fontSize={"18px"} lineHeight={"26.1px"} fontWeight={"600"} >Borrow History</Text>
                     <Borrowtable data={data?.Borrowing} />
                 </Flex>
+                <ModalLayout size={"sm"} open={open} close={setOpen} title={`Clear ${capitalizeFLetter(data?.name)}'s Debit`} >
+                    <Flex flexDirection={"column"} pb={"6"} gap={""} >
+                        <Text mb={"3"} >Amount Paid</Text>
+                        <InputComponent value={debitAmount} onChange={(e: any)=> setDebitAmount(e.target.value)} right={true} rightIcon={
+                            <Text onClick={()=> setDebitAmount(Number(data?.debtBalance) ?? 0)} >Max</Text>
+                        } type='number'  />
+                        <Button isLoading={clearDebitMutation?.isLoading} isDisabled={clearDebitMutation?.isLoading} onClick={()=> clickHandler()} h={"45px"} mt="6" rounded={ "5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
+                            Submit
+                        </Button>
+                    </Flex>
+                </ModalLayout>
             </Flex>
         </LoadingAnimation>
     )

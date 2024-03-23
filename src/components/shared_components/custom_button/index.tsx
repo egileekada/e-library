@@ -2,13 +2,13 @@ import { Button } from '@chakra-ui/react'
 import React from 'react'
 
 interface Props {
-    heigth: string,
-    h: string,
-    width: string,
-    w: string,
+    heigth?: string,
+    h?: string,
+    width?: string,
+    w?: string,
     children: React.ReactNode,
     [x: string]: any,
-    backgroundColor: string,
+    backgroundColor?: string,
     rounded: string
 }
 
