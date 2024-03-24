@@ -40,11 +40,12 @@ function GadgetTable(props: Props) {
 
     const { isLoading, isRefetching } = useQuery(['gadgettable', search, page, limit, filter?.state], () => actionService.getservicedata(`/hardware/gadget`,
         {
-            ...cleanup(filter),
-            page: page,
-            limit: limit,
-            manufacturer: search ? search : null,
-            type: search ? search : null, 
+            ...cleanup({...filter,
+                page: page,
+                limit: limit,
+                manufacturer: search ? search : null,
+                type: search ? search : null, 
+            }),
         }), {
         onError: (error: any) => {
             toast({

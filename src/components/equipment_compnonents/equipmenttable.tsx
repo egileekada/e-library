@@ -41,10 +41,11 @@ function EquipmentTable(props: Props) {
 
     const { isLoading, isRefetching } = useQuery(['equipmenttable', search, page, limit, filter?.state], () => actionService.getservicedata(`/hardware/equipment`,
         {
-            ...cleanup(filter),
-            page: page,
-            limit: limit,
-            type: search,
+            ...cleanup({...filter, 
+                page: page,
+                limit: limit,
+                type: search,
+            }),
         }), {
         onError: (error: any) => {
             toast({

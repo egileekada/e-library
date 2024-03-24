@@ -32,7 +32,7 @@ function Librarytable(props: Props) {
 
     focusManager.setFocused(false)
 
-    const { isLoading, isRefetching } = useQuery(['librarytable', search, page, limit, filter?.status, filter.isbn, filter?.author, filter?.publicationYear, filter?.issn], () => actionService.getservicedata(search ? `/record/search` : `/record/filter` ,
+    const { isLoading, isRefetching } = useQuery(['librarytable', search, page, limit, filter?.status, filter.isbn, filter?.author, filter?.publicationYear, filter?.issn], () => actionService.getservicedata(search ? `/record/search-all` : `/record/filter` ,
         {
             ...cleanup({
                 ...filter,
@@ -51,7 +51,7 @@ function Librarytable(props: Props) {
         },
         onSuccess: (data: any) => { 
             setPage(data?.data?.page) 
-            setLimit(data?.data?.limit)
+            setLimit(30)
             setTotal(data?.data?.total)
             setData(data?.data?.data)
         }

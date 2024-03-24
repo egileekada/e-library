@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { IAdmin } from '../../models';
 import LoadingAnimation from '../shared_components/loading_animation';
 import actionService from '../../connections/getdataaction';
-import filterdata from '../../store/filterdata'; 
+import filterdata from '../../store/filterdata';
 import { capitalizeFLetter } from '../../util/capitalLetter';
+import { cleanup } from '../../util/cleanup';
 
 interface Props {
     tableRef: any
@@ -37,11 +38,13 @@ function Admintable(props: Props) {
 
     const { isLoading, isRefetching } = useQuery(['admintable', search, page, limit], () => actionService.getservicedata(`/admin/get-all-admin`,
         {
-            page: page,
-            limit: limit,
-            name: search,
-            staffId: search,
-            email: search
+            ...cleanup({
+                page: page,
+                limit: limit,
+                name: search,
+                staffId: search,
+                email: search
+            })
         }
     ), {
         onError: (error: any) => {
@@ -57,9 +60,9 @@ function Admintable(props: Props) {
             setLimit(data?.data?.limit)
             setTotal(data?.data?.total)
             setData(data?.data?.data);
-            setDataInfo(data?.data?.data); 
+            setDataInfo(data?.data?.data);
         }
-    }) 
+    })
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} length={data?.length} >
@@ -84,12 +87,12 @@ function Admintable(props: Props) {
                                     <Td>{item?.id}</Td>
                                     <Td>
                                         {/* {item?.profilePicture && ( */}
-                                            <Box w={"48px"} h={"48px"} borderWidth={"3px"} rounded={"full"} >
-                                                <Image w={"full"} h={"full"} rounded={"full"} src={item?.profilePicture ? item?.profilePicture : "/avatar.png"} objectFit={"cover"} alt='image' />
-                                            </Box>
+                                        <Box w={"48px"} h={"48px"} borderWidth={"3px"} rounded={"full"} >
+                                            <Image w={"full"} h={"full"} rounded={"full"} src={item?.profilePicture ? item?.profilePicture : "/avatar.png"} objectFit={"cover"} alt='image' />
+                                        </Box>
                                         {/* // )}  */}
                                     </Td>
-                                    <Td>{item?.name?.length > 13 ? capitalizeFLetter(item?.name.slice(0, 12) + "..." ): capitalizeFLetter(item?.name)}</Td>
+                                    <Td>{item?.name?.length > 13 ? capitalizeFLetter(item?.name.slice(0, 12) + "...") : capitalizeFLetter(item?.name)}</Td>
                                     {/* <Td>{item?.staffId ? "Staff" : "Guest"}</Td> */}
                                     <Td>{item?.email?.length > 13 ? item?.email.slice(0, 12) + "..." : item?.email}</Td>
                                     <Td>{item?.staffId}</Td>
