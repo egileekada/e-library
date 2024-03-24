@@ -13,12 +13,12 @@ import Yearselector from '../../models/yearselector';
 import QrcodeMultiple from '../shared_components/qrcodemultiple';
 
 interface Props {
-    close?: any, 
+    close?: any,
 }
 
 function Libraryform(props: Props) {
     const {
-        close, 
+        close,
     } = props
 
     const [imageFile, setImageFile] = useState("");
@@ -82,7 +82,7 @@ function Libraryform(props: Props) {
             response = await handleAddBook(formData);
         } else {
             response = await handleAddReport(formData);
-        } 
+        }
 
         if (response?.status === 201 || response?.status === 200) {
 
@@ -93,7 +93,7 @@ function Libraryform(props: Props) {
                 position: "top",
             });
 
-            queryClient.invalidateQueries(['librarytable']) 
+            queryClient.invalidateQueries(['librarytable'])
             setIndex(response?.data?.data);
 
             return response;
@@ -287,25 +287,25 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Literature Type</Text>
-                            <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}> 
+                            <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 <option>Journal</option>
                                 <option>Book</option>
                                 <option>Report</option>
                             </Select>
                         </Box>
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text> 
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text>
                             <Select placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
                                 <option>Less than ₦20,000</option>
-                                <option>₦20,000 - ₦40,000</option> 
+                                <option>₦20,000 - ₦40,000</option>
                                 <option>N40,000 - ₦60,000</option>
                                 <option>₦60,000 - ₦80,000</option>
                                 <option>₦80,000 - ₦100,000</option>
-                                <option>Above ₦100,000</option> 
+                                <option>Above ₦100,000</option>
                             </Select>
                         </Box>
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text> 
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text>
                             <Select placeholder='Select Category' onChange={(e) => formik.setFieldValue("category", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 {book_categories?.map((item: string, index: number) => {
                                     return (
@@ -315,14 +315,15 @@ function Libraryform(props: Props) {
                             </Select>
                         </Box>
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Number Of Books</Text> 
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Number Of Books</Text>
                             <InputComponent
                                 name="count"
                                 onChange={formik.handleChange}
-                                onFocus={() =>
-                                    formik.setFieldTouched("count", true, true)
-                                }
-                                touch={formik.touched.count}
+                                // onFocus={() =>
+                                //     formik.setFieldTouched("count", true, true)
+                                // }
+                                touch={formik.touched.count} 
+                                onFocus={(e: any) => {formik.setFieldTouched("count", true, true), e.target.addEventListener("wheel", function (e: any) { e.preventDefault() }, { passive: false })}}
                                 error={formik.errors.count} placeholder="Number Of Books" type='number' />
                         </Box>
                         {type === "Book" && (

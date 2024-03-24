@@ -5,14 +5,14 @@ import { PrintIcon } from '../svg'
 import { useReactToPrint } from 'react-to-print'
 import { ILibrary } from '../../../models'
 
-interface Props { 
+interface Props {
     setOpen?: any
     data?: any
 }
 
 function QrcodeMultiple(props: Props) {
     const {
-        data  
+        data
     } = props
 
     const componentRef: any = useRef(null)
@@ -22,23 +22,28 @@ function QrcodeMultiple(props: Props) {
         documentTitle: data[0].name,
     });
 
+    console.log(data);
+    
+
     return (
         <Flex w={"full"} flexDir={"column"} alignItems={"center"} >
             <Box ref={componentRef} >
 
                 <Grid templateColumns='repeat(2, 1fr)' gap={4} py={"4"}>
-                    {data?.map((item: ILibrary, index: number) => {
-                        return(
+                    {data?.map((item: ILibrary, index: number) => { 
+                        return (
                             <GridItem key={index} width={"full"} display={"flex"} flexDir={"column"} justifyContent={"center"} alignItems={"center"} >
                                 <Text textAlign={'center'} fontSize={"18px"} fontWeight={"600"} lineHeight={"26px"} color={"#010203"} >{item?.name}</Text>
                                 <Text textAlign={'center'} fontSize={"sm"} color={"#4F4F4F"} fontWeight={"600"} lineHeight={'20.3px'} >ID Number: <span>{item?.id}</span></Text>
-                                <Flex w={"full"} alignItems={"center"} justifyItems={"center"} flexDir={"column"} gap={"6"} pb={"2"} pt={"5"} >
-                                    <QRCode
-                                        style={{ height: "143px", maxWidth: "100%", width: "143px", zIndex: 20 }}
-                                        value={item?.id  ?? ""}
-                                        viewBox={`0 0 256 256`}
-                                    />
-                                </Flex>
+                                {item?.id && (
+                                    <Flex w={"full"} alignItems={"center"} justifyItems={"center"} flexDir={"column"} gap={"6"} pb={"2"} pt={"5"} >
+                                        <QRCode
+                                            style={{ height: "143px", maxWidth: "100%", width: "143px", zIndex: 20 }}
+                                            value={item?.id+""}
+                                            viewBox={`0 0 256 256`}
+                                        />
+                                    </Flex>
+                                )}
                             </GridItem>
                         )
                     })}
