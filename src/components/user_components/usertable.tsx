@@ -17,6 +17,7 @@ interface Props {
     limit: number;
     setLimit: (by: number) => void;
     setTotal: (by: number) => void;
+    setDataInfo: any
 }
 
 function Usertable(props: Props) {
@@ -26,7 +27,8 @@ function Usertable(props: Props) {
         page,
         setPage,
         setLimit,
-        setTotal
+        setTotal,
+        setDataInfo
     } = props
 
     const [data, setData] = useState([] as Array<IUserData>)
@@ -58,6 +60,7 @@ function Usertable(props: Props) {
             setLimit(data?.data?.limit)
             setTotal(data?.data?.total)
             setData(data?.data?.data);
+            setDataInfo(data?.data?.data);
         }
     })
 

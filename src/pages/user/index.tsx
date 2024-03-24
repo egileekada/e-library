@@ -13,13 +13,14 @@ function UserPage(props: Props) {
     const [page, setPage] = useState(1)
     const [limit, setLimit] = useState(10)
     const [totalItem, setTotalItem] = useState(0)
+    const [data, setData] = useState([] as Array<any>)
 
     const tableRef: any = useRef();
 
     return (
         <Flex width={"full"} height={"full"} flexDir={"column"} pb={"4"} >
-            <Filter data={[]} name={'User'} />
-            <Usertable  tableRef={tableRef} setLimit={setLimit} setPage={setPage} setTotal={setTotalItem} limit={limit} page={page}  />
+            <Filter data={data} name={'User'} />
+            <Usertable setDataInfo={setData}  tableRef={tableRef} setLimit={setLimit} setPage={setPage} setTotal={setTotalItem} limit={limit} page={page}  />
             <Box mt={"auto"} pt={"12"} > 
                 <Pagination  setLimit={setLimit} setPage={setPage} setTotal={setTotalItem} limit={limit} page={page} totalItem={totalItem}  />
             </Box>
