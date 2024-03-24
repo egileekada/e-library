@@ -146,9 +146,9 @@ function Otherfilter(props: Props) {
                 {path?.pathname === "/dashboard/library" && (
                     <Flex w={"full"} flexDir={"column"} gap={"3"} >
                         <Box w={"full"} >
-                            <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >State</Text>
+                            <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >Status</Text>
 
-                            <RadioGroup onChange={(e) => setInitialFilter({ ...initialFilter, state: e })} value={initialFilter?.state}>
+                            <RadioGroup onChange={(e) => setInitialFilter({ ...initialFilter, status: e })} value={initialFilter?.status}>
                                 <Stack direction='row'>
                                     {datastate?.map((item: {
                                         name: string,

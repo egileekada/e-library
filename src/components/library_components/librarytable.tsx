@@ -6,6 +6,7 @@ import actionService from '../../connections/getdataaction';
 import Tiles from './tiles';
 import { ILibrary } from '../../models';
 import LoadingAnimation from '../shared_components/loading_animation';
+import { cleanup } from '../../util/cleanup';
 
 interface Props {
     page: number;
@@ -31,16 +32,14 @@ function Librarytable(props: Props) {
 
     focusManager.setFocused(false)
 
-    const { isLoading, isRefetching } = useQuery(['librarytable', search, page, limit, filter?.state, filter.isbn, filter?.author, filter?.publicationYear, filter?.issn], () => actionService.getservicedata(search ? `/record/search` : `/record/filter` ,
+    const { isLoading, isRefetching } = useQuery(['librarytable', search, page, limit, filter?.status, filter.isbn, filter?.author, filter?.publicationYear, filter?.issn], () => actionService.getservicedata(search ? `/record/search` : `/record/filter` ,
         {
-            page: page,
-            limit: limit,
-            state: search? "" : filter?.state,
-            isbn: search? "" : filter?.isbn,
-            author: search? "" : filter?.author,
-            publicationYear: search? "" : filter?.publicationYear,
-            issn: search? "" : filter?.issn,
-            keyword: search ? search : null
+            ...cleanup({
+                ...filter,
+                page: page,
+                limit: limit, 
+                keyword: search ? search : null}
+            )
         }), {
         onError: (error: any) => {
             toast({
