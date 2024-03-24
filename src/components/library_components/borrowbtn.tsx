@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import ModalLayout from '../shared_components/modal_layout'
-import InputComponent from '../shared_components/custom_input'
 import UserSearch from '../shared_components/user_search'
 import { IBorrow, ILibrary, IUserData } from '../../models'
 import Userform from '../user_components/userform'
@@ -10,6 +9,9 @@ import * as yup from 'yup'
 import { useFormik } from 'formik';
 import { useMutation, useQueryClient } from 'react-query'
 import { useRecordBorrowCallback } from '../../connections/useaction'
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { dateFormat } from '../../util/dateFormat'
 
 function Borrowbtn(props: ILibrary) {
     const {
@@ -31,7 +33,7 @@ function Borrowbtn(props: ILibrary) {
 
     const loginSchema = yup.object({
         startDate: yup.string().required('required'),
-        endDate: yup.string().required('required'), 
+        endDate: yup.string().required('required'),
     })
 
     // formik
@@ -106,8 +108,35 @@ function Borrowbtn(props: ILibrary) {
                 });
             });
 
-    } 
+    }
 
+    // Function to handle date selection
+    const handleStartDateChange = (date: any) => {
+        formik.setFieldValue("startDate", new Date(date).toISOString()?.toString())
+    };
+
+    // Function to handle date selection
+    const handleEndDateChange = (date: any) => {
+        formik.setFieldValue("endDate", new Date(date).toISOString()?.toString())
+    };
+
+    const StartDateCustomInput = forwardRef(({ onClick }: any, ref: any) => (
+        <Box onClick={onClick} ref={ref} w={"350px"} display={"flex"} px={"16px"} alignItems={"center"} color={"black"} height={"45px"} rounded={"6px"} border={"1px solid #BDBDBD"}  >
+            {formik?.values.startDate ? dateFormat(formik?.values.startDate) : "Click to select a date"}
+        </Box>
+    ));
+
+    const EndDateCustomInput = forwardRef(({ onClick }: any, ref: any) => (
+        <Box onClick={onClick} ref={ref} w={"350px"} display={"flex"} px={"16px"} alignItems={"center"} color={"black"} height={"45px"} rounded={"6px"} border={"1px solid #BDBDBD"}  >
+            {formik?.values.endDate ? dateFormat(formik?.values.endDate) : "Click to select a date"}
+        </Box>
+    ));
+
+    const closeModal = () => {
+        setOpen(false)
+        formik.setFieldValue("startDate", "")
+        formik.setFieldValue("endDate", "")
+    }
 
     return (
         <>
@@ -120,7 +149,7 @@ function Borrowbtn(props: ILibrary) {
                         <form onSubmit={submit} style={{ width: "100%" }} >
                             <Flex justifyContent={"center"} mb={'6'} pos={"relative"} w={"full"} >
                                 <Text>Borrow Book</Text>
-                                <Box as='button' onClick={() => setOpen(false)} position={"absolute"} right={"0px"} top={"2px"}  >
+                                <Box as='button' onClick={() => closeModal()} position={"absolute"} right={"0px"} top={"2px"}  >
                                     <CloseIcon />
                                 </Box>
                             </Flex>
@@ -133,23 +162,33 @@ function Borrowbtn(props: ILibrary) {
                             )}
                             {/* <Text textAlign={"center"} fontSize={"14px"} lineHeight={"20.3px"} color={"#828282"} >ID Number: 125678</Text> */}
                             <Text mt={"3"} mb={"1"} color={"#101928"} fontSize={"14px"} fontWeight={"500"} lineHeight={"20.3px"} >Borrow Date</Text>
-                            <InputComponent
-                                name="startDate"
-                                onChange={formik.handleChange}
-                                onFocus={() =>
-                                    formik.setFieldTouched("startDate", true, true)
-                                }
-                                touch={formik.touched.startDate}
-                                error={formik.errors.startDate} type='date' />
+                            <Box w={"full"} >
+                                <DatePicker
+
+                                    minDate={new Date()}
+                                    placeholderText="Click to select start date"
+                                    customInput={<StartDateCustomInput />}
+                                    onChange={handleStartDateChange}
+                                />
+                            </Box>
                             <Text mt={"3"} mb={"1"} color={"#101928"} fontSize={"14px"} fontWeight={"500"} lineHeight={"20.3px"} >Return Date</Text>
-                            <InputComponent
+                            <Box w={"full"} >
+                                <DatePicker
+                                    minDate={new Date(new Date(formik.values.startDate).getTime() + (1 * 24 * 60 * 60 * 1000))}
+                                    maxDate={new Date(new Date(formik.values.startDate).getTime() + (14 * 24 * 60 * 60 * 1000))}
+                                    placeholderText="Click to select end date"
+                                    customInput={<EndDateCustomInput />}
+                                    onChange={handleEndDateChange}
+                                />
+                            </Box>
+                            {/* <InputComponent
                                 name="endDate"
-                                onChange={formik.handleChange}
+                                onChange={(e: any) => handleChange(e, "endDate")}
                                 onFocus={() =>
                                     formik.setFieldTouched("endDate", true, true)
                                 }
                                 touch={formik.touched.endDate}
-                                error={formik.errors.endDate} type='date' />
+                                error={formik.errors.endDate} type='date' /> */}
                             <Box mt={"4"} w={"full"} >
                                 <Flex w={"full"} justifyContent={"space-between"} >
                                     <Text mt={"3"} mb={"1"} color={"#101928"} fontSize={"14px"} fontWeight={"500"} lineHeight={"20.3px"} >Add User</Text>
@@ -167,7 +206,7 @@ function Borrowbtn(props: ILibrary) {
                         </ModalLayout>
                     </Flex>
 
-                    <Flex onClick={() => setOpen(false)} position={"fixed"} bgColor={"black"} zIndex={"100"} opacity={"20%"} inset={"0px"} />
+                    <Flex onClick={() => closeModal()} position={"fixed"} bgColor={"black"} zIndex={"100"} opacity={"20%"} inset={"0px"} />
                 </Flex>
             )}
         </>

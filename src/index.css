@@ -16,3 +16,12 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+.inputstyle{ 
+  border: 1px solid #BDBDBD;
+  padding-left: 16px;
+  font-size: 14px;
+  height: 45px;
+  border-radius: 6px;
+  width: 100% !important;
+}

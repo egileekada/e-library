@@ -42,7 +42,8 @@ export default function InputComponent({ left, leftIcon, right, rightIcon, type,
                                 </Box>
                             }
                         />
-                    )}
+                    )} 
+                    
                     <Input {...rest} type={intialType} textColor="#000" paddingLeft={left ? "45px" : ""} fontSize="14px" fontWeight="400" bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={h ? h : "45px"} />
                     {right && (
                         <InputRightElement
