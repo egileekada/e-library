@@ -12,6 +12,7 @@ import AdminPage from './pages/personnel';
 import LibraryPage from './pages/library';
 import LibraryInfo from './pages/library_info';
 import PartnerInfo from './pages/partner_info';
+import Transaction from './pages/transaction';
 // import Home from './pages/home';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path='/home/info' element={<PartnerInfo />} />
         <Route path='/dashboard' element={<DashboardLayout />} >
           <Route path='/dashboard/home' element={<DashboardPage />} />
+          <Route path='/dashboard/transaction' element={<Transaction />} />
           <Route path='/dashboard/elibrary' element={<Elibrary />} />
           <Route path='/dashboard/library' element={<LibraryPage />} />
           <Route path='/dashboard/user' element={<UserPage />} />

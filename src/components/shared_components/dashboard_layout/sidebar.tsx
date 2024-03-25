@@ -34,6 +34,10 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
+        },
+        {
+            name: "Transaction",
+            router: "/dashboard/transaction"
         } 
     ]
 
@@ -61,6 +65,10 @@ function Sidebar(props: Props) {
         {
             name: "User",
             router: "/dashboard/user"
+        },
+        {
+            name: "Transaction",
+            router: "/dashboard/transaction"
         } 
     ]
 
@@ -114,6 +122,9 @@ function Sidebar(props: Props) {
                                             {item?.name === "Library" && (
                                                 <Library color={item?.router.includes(activeTab) ? "#114EA3" : ""} />
                                             )}
+                                            {item?.name === "Transaction" && (
+                                                <FileIcon color={item?.router.includes(activeTab) ? "#114EA3" : ""} />
+                                            )}
                                         </Box>
                                         <Text color={item?.router.includes(activeTab) ? "#114EA3" : "#8C8C8C"} fontWeight={"medium"} lineHeight={"16.94px"} fontSize={"14px"} >{item.name}</Text>
                                     </Flex>
@@ -138,6 +149,9 @@ function Sidebar(props: Props) {
                                             )}
                                             {item?.name === "Library" && (
                                                 <Library color={item?.router.includes(activeTab) ? "#114EA3" : ""} />
+                                            )}
+                                            {item?.name === "Transaction" && (
+                                                <FileIcon color={item?.router.includes(activeTab) ? "#114EA3" : ""} />
                                             )}
                                         </Box>
                                         <Text color={item?.router.includes(activeTab) ? "#114EA3" : "#8C8C8C"} fontWeight={"medium"} lineHeight={"16.94px"} fontSize={"14px"} >{item.name}</Text>

@@ -117,3 +117,12 @@ export interface BorrowData {
     endDate: string,
     status: string
 }
+
+export interface TransactionData {
+    user?: IUserData,
+    id?: string | number,
+    amountCleared: number,
+    newAmount: number,
+    admin: IAdmin, 
+    createdAt?: string
+}
