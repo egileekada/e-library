@@ -85,11 +85,7 @@ function Otherfilter(props: Props) {
             setInitialFilter({} as any)
             setFilter({} as any)
         // }
-    }, [path?.pathname])
-
-    console.log(initialFilter);
-    
-
+    }, [path?.pathname]) 
 
     return (
         <Box pos={"relative"} >
