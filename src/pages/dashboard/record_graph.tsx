@@ -56,6 +56,7 @@ export default function RecordGraph(props: IProps) {
             }
         ]
     };
+    
     return (
         <Flex>
 

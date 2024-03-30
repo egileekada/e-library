@@ -14,9 +14,9 @@ export default function BorrowGraph(props: IProps) {
         available,
         overdue,
         borrow
-    } = props 
+    } = props  
 
-    let option = { 
+    let option = {
         tooltip: {
             trigger: 'item'
         },
@@ -24,40 +24,38 @@ export default function BorrowGraph(props: IProps) {
             top: '5%',
             left: 'center'
         },
-        // toolbox: {
-        //   show: true,
-        //   feature: {
-        //     mark: { show: true },
-        //     dataView: { show: true, readOnly: false },
-        //     restore: { show: true },
-        //     saveAsImage: { show: true }
-        //   }
-        // },
         series: [
-          {
-            name: 'Radius Mode',
-            type: 'pie',
-            radius: ['10%', '70%'], 
-            roseType: 'radius',
-            itemStyle: {
-              borderRadius: 5
-            },
-            label: {
-              show: false
-            },
-            emphasis: {
-              label: {
-                show: false
-              }
-            },
-            data: [
-              { value: available, name: 'Available' },
-              { value: borrow, name: 'Borrowed' },
-              { value: overdue, name: 'Overdue' }
-            ]
-          }
+            {
+                name: 'Records',
+                type: 'pie',
+                radius: ['40%', '70%'],
+                avoidLabelOverlap: false,
+                padAngle: 5,
+                itemStyle: {
+                    borderRadius: 10
+                },
+                label: {
+                    show: false,
+                    position: 'center'
+                },
+                emphasis: {
+                    label: {
+                        show: true,
+                        fontSize: 40,
+                        fontWeight: 'bold'
+                    }
+                },
+                labelLine: {
+                    show: false
+                },
+                data: [
+                    { value: available, name: 'Available' },
+                    { value: borrow, name: 'Borrowed' },
+                    { value: overdue, name: 'Overdue' }
+                ]
+            }
         ]
-      };
+    };
 
     return (
         <Flex>

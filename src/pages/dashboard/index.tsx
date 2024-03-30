@@ -60,7 +60,7 @@ function DashboardPage() {
                         <RecordGraph book={data?.records?.books} report={data?.records?.reports} journal={data?.records?.journals} />
                     </Flex>
                     <Flex flexDir={"column"} border={"1px solid #E7E7E7"} pt={"6"} px={"6"} rounded={"lg"} shadow={"md"}  >
-                        <Text fontWeight={"bold"} fontSize={"2xl"} >Borrowed Records</Text>
+                        <Text fontWeight={"bold"} fontSize={"2xl"} >Borrowed Records %</Text>
                         <BorrowGraph available={data?.borrow?.availablePercentage} overdue={data?.borrow?.overduePercentage} borrow={100 - (data?.borrow?.availablePercentage + data?.borrow?.overduePercentage)} />
                     </Flex> 
                 </Flex>
