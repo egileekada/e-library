@@ -15,7 +15,8 @@ function Returnbtn(props: ILibrary) {
         ISBN,
         IDNumber, 
         id,
-        table
+        table,
+        borrowId
     } = props
 
     const toast = useToast()
@@ -72,7 +73,7 @@ function Returnbtn(props: ILibrary) {
     const [qrCode, setQrCode] = useState("")
 
     useEffect(() => {
-        formik?.setFieldValue("recordId", id)
+        formik?.setFieldValue("recordId", borrowId)
     }, [])
 
 

@@ -70,7 +70,6 @@ function Recordborrowhistory(props: Props) {
         }
     }
 
-
     return (
 
         <LoadingAnimation loading={false} length={data?.length} >
@@ -88,7 +87,7 @@ function Recordborrowhistory(props: Props) {
                         </Tr>
                     </Thead>
                     <Tbody>
-                        {data?.map((item: BorrowData, index: number) => {
+                        {data?.map((item: BorrowData, index: number) => { 
                             return (
                                 <Tr role='button' fontSize={"14px"} key={index} >
                                     <Td>{item?.user?.name}</Td>

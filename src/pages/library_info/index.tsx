@@ -51,7 +51,7 @@ function LibraryInfo(props: Props) {
         if (!userId) {
             navigate("/dashboard/user")
         }
-    }, []) 
+    }, [])  
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
