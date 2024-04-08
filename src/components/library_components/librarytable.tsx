@@ -46,14 +46,14 @@ function Librarytable(props: Props) {
                 status: "error",
                 title: "Error occured",
             });
-            console.log(error);
-
+            console.log(error)
         },
-        onSuccess: (data: any) => { 
-            setPage(data?.data?.page) 
+        onSuccess: (data: any) => {
+            setPage(data?.data?.page)
             setLimit(60)
             setTotal(data?.data?.total)
             setData(data?.data?.data)
+            console.log(data?.data?.data)  
         }
     })
     return (

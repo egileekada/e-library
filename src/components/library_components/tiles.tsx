@@ -16,7 +16,8 @@ function Tiles(props: ILibrary) {
         thumbnail,
         IDNumber,
         id,
-        status
+        status,
+        Borrowing
     } = props
 
 
@@ -73,8 +74,8 @@ function Tiles(props: ILibrary) {
                 {status === "AVAILABLE" && (
                     <Borrowbtn {...props} />
                 )}
-                {status !== "AVAILABLE" && (
-                    <Returnbtn {...props} />
+                {(status !== "AVAILABLE" && Borrowing) && (
+                    <Returnbtn borrowId={Borrowing?.length > 0 ? Borrowing[0]?.id : ""} {...props} />
                 )}
             </Flex>
         </Flex>

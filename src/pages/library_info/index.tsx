@@ -76,9 +76,9 @@ function LibraryInfo(props: Props) {
                             <Text textAlign={"left"} lineHeight={"19.36px"} fontWeight={"500"} >Qr_code</Text>
                         </Flex>
                         <Flex mt={"auto"} alignItems={"center"} justifyItems={"center"} gap={"4"} >
-                            {data?.status === "NOT_AVAILABLE" && (
+                            {(data?.status === "NOT_AVAILABLE" && data?.Borrowing) && (
                                 <Box w={"200px"} >
-                                    <Returnbtn {...data} />
+                                    <Returnbtn borrowId={data?.Borrowing?.length > 0  ? data?.Borrowing[0]?.id : ""} {...data} />
                                 </Box>
                             )}
                             <DeleteRecords id={data?.id} />
