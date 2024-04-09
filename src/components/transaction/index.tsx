@@ -75,7 +75,7 @@ function TransactionTable(props: Props) {
                             <Th>Staff/Guest</Th>
                             <Th>Admin</Th>
                             <Th>Amount Clear</Th>
-                            <Th>Debit</Th>
+                            <Th>Debt</Th>
                             <Th>Date</Th> 
                         </Tr>
                     </Thead>

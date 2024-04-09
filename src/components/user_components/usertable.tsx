@@ -83,7 +83,7 @@ function Usertable(props: Props) {
                             <Th>Staff ID</Th>
                             <Th>Email</Th>
                             <Th>Phone No.</Th>
-                            <Th>Debit</Th>
+                            <Th>Debt</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
