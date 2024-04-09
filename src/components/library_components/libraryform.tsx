@@ -296,9 +296,9 @@ function Libraryform(props: Props) {
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text>
                             <Select placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
-                                <option>Less than ₦20,000</option>
+                                <option value={"Less than ₦20,000"} >Less than ₦20,000</option>
                                 <option>₦20,000 - ₦40,000</option>
-                                <option>N40,000 - ₦60,000</option>
+                                <option>₦40,000 - ₦60,000</option>
                                 <option>₦60,000 - ₦80,000</option>
                                 <option>₦80,000 - ₦100,000</option>
                                 <option>Above ₦100,000</option>
