@@ -27,9 +27,9 @@ function Partnertable(props: Props) {
 
     const { search } = filterdata((state) => state);
     const [loading, setLoading] = useState(false)
-    const [data, setData] = useState([] as Array<IPartner>) 
+    const [data, setData] = useState([] as Array<IPartner>)
 
-    const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/partner/filter`, limit: 2, filter: "id" })
+    const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/partner/filter`, limit: 20, filter: "id" })
 
     return (
         <>
@@ -40,32 +40,59 @@ function Partnertable(props: Props) {
                 <>
                     <LoadingAnimation loading={isLoading && loading} >
                         <Grid templateColumns='repeat(3, 1fr)' gap={4} py={"4"}>
-                            {data?.map((item: IPartner, index: number) => { 
+                            {data?.map((item: IPartner, index: number) => {
                                 return (
                                     <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
                                         <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
                                     </GridItem>
                                 )
                             })}
-                            {results?.filter((el: IPartner) => {
-                                return data.some((f) => {
-                                    return f.id !== el.id
-                                });
-                            })?.map((item: IPartner, index: number) => {
-                                if (results.length === index + 1) {
-                                    return (
-                                        <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
-                                            <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
-                                        </GridItem>
-                                    )
-                                } else {
-                                    return (
-                                        <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
-                                            <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
-                                        </GridItem>
-                                    )
-                                }
-                            })}
+                            {data?.length > 0 && (
+                                <>
+                                    {results?.filter((el: IPartner) => {
+                                        return data.some((f) => {
+                                            return f.id !== el.id
+                                        });
+                                    })?.map((item: IPartner, index: number) => {
+                                        console.log(index);
+
+                                        if (results.length === index + 1) {
+                                            return (
+                                                <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
+                                                    <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                                </GridItem>
+                                            )
+                                        } else {
+                                            return (
+                                                <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
+                                                    <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                                </GridItem>
+                                            )
+                                        }
+                                    })}
+                                </>
+                            )}
+                            {data?.length === 0 && (
+                                <> 
+                                    {results?.map((item: IPartner, index: number) => {
+                                        console.log(index);
+
+                                        if (results.length === index + 1) {
+                                            return (
+                                                <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
+                                                    <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                                </GridItem>
+                                            )
+                                        } else {
+                                            return (
+                                                <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
+                                                    <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                                </GridItem>
+                                            )
+                                        }
+                                    })}
+                                </>
+                            )}
                             {(isRefetching && !isLoading) && (
                                 <GridItem display={"flex"} justifyContent={"center"} alignItems={"center"} >
                                     <Spinner />
