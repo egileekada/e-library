@@ -60,7 +60,7 @@ function InfiniteScrollerComponent(props: Props) {
             }
           }
  
-            setHasNextPage(data?.data?.total > size ? true:false);
+            setHasNextPage(data?.data?.total > size);
             window.scrollTo(0, window.innerHeight); 
         //   setData(data.data.content);
         }
