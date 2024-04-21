@@ -9,7 +9,7 @@ import { dateFormat } from '../../util/dateFormat'
 import { useNavigate } from 'react-router-dom'
 import { capitalizeFLetter } from '../../util/capitalLetter'
 import ModalLayout from '../../components/shared_components/modal_layout'
-import { IUserData } from '../../models' 
+import { IUserData } from '../../models'
 import InputComponent from '../../components/shared_components/custom_input'
 import { useClearDebitCallback } from '../../connections/useaction'
 import { formatNumber } from '../../util/numberFormat'
@@ -28,7 +28,7 @@ function UserInfo(props: Props) {
 
     const userId = localStorage.getItem("currentuser")
 
-    const navigate = useNavigate() 
+    const navigate = useNavigate()
 
     // const param
 
@@ -50,15 +50,15 @@ function UserInfo(props: Props) {
         if (!userId) {
             navigate("/dashboard/user")
         }
-    }, []) 
+    }, [])
 
     //API call to handle adding user
-    const clearDebitMutation = useMutation(async (debitdata: {amount: number}) => { 
+    const clearDebitMutation = useMutation(async (debitdata: { amount: number }) => {
 
         const response = await handleClearDebit(data?.id ?? "", debitdata);
 
-        if (response?.status === 201 || response?.status === 200) { 
-            
+        if (response?.status === 201 || response?.status === 200) {
+
             console.log(response);
             toast({
                 title: "Successful",
@@ -79,9 +79,9 @@ function UserInfo(props: Props) {
         }
     });
 
-    const clickHandler =()=> {
+    const clickHandler = () => {
 
-        clearDebitMutation.mutateAsync({amount: Number(debitAmount)}, {
+        clearDebitMutation.mutateAsync({ amount: Number(debitAmount) }, {
             onSuccess: (data: any) => {
                 if (data) {
                     refetch()
@@ -98,6 +98,8 @@ function UserInfo(props: Props) {
                 });
             });
     }
+
+    const role = localStorage.getItem("role");
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
@@ -129,10 +131,14 @@ function UserInfo(props: Props) {
                                 )}
                             </>
                         )}
-                        {(data?.debtBalance !== 0) && ( 
-                            <Button onClick={()=> setOpen(true)} h={"45px"} mt="6" rounded={ "5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
-                                Clear {formatNumber(data?.debtBalance, true)} Debit
-                            </Button>
+                        {role === "SUPER_ADMIN" && (
+                            <>
+                                {(data?.debtBalance !== 0) && (
+                                    <Button onClick={() => setOpen(true)} h={"45px"} mt="6" rounded={"5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
+                                        Clear {formatNumber(data?.debtBalance, true)} Debit
+                                    </Button>
+                                )}
+                            </>
                         )}
                     </Box>
                 </Flex>
@@ -147,10 +153,10 @@ function UserInfo(props: Props) {
                 <ModalLayout size={"sm"} open={open} close={setOpen} title={`Clear ${capitalizeFLetter(data?.name)}'s Debit`} >
                     <Flex flexDirection={"column"} pb={"6"} gap={""} >
                         <Text mb={"3"} >Amount Paid</Text>
-                        <InputComponent value={debitAmount} onChange={(e: any)=> setDebitAmount(e.target.value)} right={true} rightIcon={
-                            <Text onClick={()=> setDebitAmount(Number(data?.debtBalance) ?? 0)} >Max</Text>
-                        } type='number'  />
-                        <Button isLoading={clearDebitMutation?.isLoading} isDisabled={clearDebitMutation?.isLoading} onClick={()=> clickHandler()} h={"45px"} mt="6" rounded={ "5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
+                        <InputComponent value={debitAmount} onChange={(e: any) => setDebitAmount(e.target.value)} right={true} rightIcon={
+                            <Text onClick={() => setDebitAmount(Number(data?.debtBalance) ?? 0)} >Max</Text>
+                        } type='number' />
+                        <Button isLoading={clearDebitMutation?.isLoading} isDisabled={clearDebitMutation?.isLoading} onClick={() => clickHandler()} h={"45px"} mt="6" rounded={"5px"} width={"full"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >
                             Submit
                         </Button>
                     </Flex>
