@@ -250,7 +250,7 @@ function Gadgetform(props: Props) {
                 <form style={{ width: "full" }} onSubmit={(e) => submit(e)} >
                     <Flex w={"full"} gap={"4"} flexDir={"column"} pb={"4"} >
                         <Box w={"full"} >
-                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Equipment</Text>
+                            <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Gadget</Text>
                             <InputComponent
                                 name="type"
                                 onChange={formik.handleChange}
