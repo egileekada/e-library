@@ -1,4 +1,4 @@
-import { Flex, Text } from '@chakra-ui/react'
+import { Flex, Text, useToast } from '@chakra-ui/react'
 import { useState } from 'react';
 // import React from 'react'
 
@@ -16,6 +16,7 @@ function ImageSelector(props: Props) {
     } = props
 
     const [imageName, setImageName] = useState("");
+    const toast = useToast()
 
     const handleImageChange = (e: any) => {
 
@@ -25,6 +26,13 @@ function ImageSelector(props: Props) {
             setImage(selected)
             setImageName(selected.name);
         } else {
+
+            toast({
+                title: "Can only accept png, jgp and jpeg",
+                status: "error",
+                duration: 3000,
+                position: "top",
+            });
             console.log('Error')
         }
     } 
