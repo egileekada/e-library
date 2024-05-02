@@ -95,7 +95,7 @@ function GadgetTable(props: Props) {
                             <Th><Checkbox size={"lg"} /></Th>
                             <Th>ID</Th>
                             <Th>Image</Th>
-                            <Th>Equipment</Th>
+                            <Th>Gadget</Th>
                             <Th>Manufacturer</Th>
                             <Th>Serial Number</Th>
                             <Th>Status</Th>
