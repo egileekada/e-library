@@ -127,7 +127,7 @@ export default function LoginPage() {
                     <Flex w={"full"} justifyContent={"center"} mb={"2"}  >
                         <Logo />
                     </Flex>
-                    <Text fontSize={"35px"} lineHeight={"42.36px"} textAlign={"center"} fontWeight={"bold"} >Log In</Text>
+                    <Text fontSize={"35px"} lineHeight={"42.36px"} textAlign={"center"} fontWeight={"bold"} >NDDC E-LIBRARY LOG IN</Text>
                     <Box>
                         <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} >Email Address</Text>
                         <InputComponent
