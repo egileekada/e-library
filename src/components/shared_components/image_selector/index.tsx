@@ -38,7 +38,7 @@ function ImageSelector(props: Props) {
     } 
 
     return (
-        <Flex h={"45px"} w={"full"} rounded={"5px"} justifyContent={"center"} alignItems={"center"} borderStyle={"dashed"} borderWidth={"1px"} borderColor={"#ADADAD"}  >
+        <Flex h={"45px"} w={"full"} px={"4"} overflowX={"auto"} rounded={"5px"} justifyContent={"center"} alignItems={"center"} borderStyle={"dashed"} borderWidth={"1px"} borderColor={"#ADADAD"}  >
 
             <label role='button' style={{ width: "100%", height: "45px", borderRadius: "5px", justifyContent: "center", alignItems: "center", display: "flex" }}  >
                 <input type="file" onChange={handleImageChange} style={{ display: "none" }} />
