@@ -65,7 +65,7 @@ function Portalform(props: Props) {
                 position: "top",
             });
 
-            queryClient.invalidateQueries(['partnertable'])
+            queryClient.invalidateQueries(['/partner/filter'])
 
             return response;
         } else if (response?.data?.statusCode === 400) {
