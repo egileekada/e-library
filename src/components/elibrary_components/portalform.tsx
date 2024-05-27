@@ -92,7 +92,7 @@ function Portalform(props: Props) {
                 position: "top",
             });
 
-            queryClient.invalidateQueries(['partnertable'])
+            queryClient.invalidateQueries(['/partner/filter'])
             close(false)
 
             return response;
