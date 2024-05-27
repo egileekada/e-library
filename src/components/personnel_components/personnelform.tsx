@@ -134,6 +134,7 @@ function Adminform(props: Props) {
             phone: formik.values.phone,
             password: formik.values.password,
             staffId: formik.values.staffId, 
+            role: formik.values.role, 
         };
 
         // if (!imageFile) {
