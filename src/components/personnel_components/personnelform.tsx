@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Flex, Text, useToast, Select } from '@chakra-ui/react'
 import { useFormik } from 'formik';
 import * as yup from 'yup'
 import InputComponent from '../shared_components/custom_input'
@@ -30,6 +30,7 @@ function Adminform(props: Props) {
         name: yup.string().required('required'),
         phone: yup.string().required('required'),
         staffId: yup.string().required('required'),
+        role: yup.string().required('required'),
         password: yup.string().required('Your password is required').min(6, 'A minimium of 6 characters')
     })
 
@@ -40,7 +41,8 @@ function Adminform(props: Props) {
             email: "",
             phone: "",
             staffId: "",
-            password: ""
+            password: "",
+            role: ""
         },
         validationSchema: loginSchema,
         onSubmit: () => { },
@@ -178,6 +180,19 @@ function Adminform(props: Props) {
                         autoComplete="off"
                         touch={formik.touched.email}
                         error={formik.errors.email} type='email' />
+                </Box>
+                <Box w={"full"} >
+                    <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Role</Text>
+                    <Select placeholder='Select Role'
+                            name="role"
+                            onChange={formik.handleChange}
+                            onFocus={() =>
+                                formik.setFieldTouched("role", true, true)
+                            }
+                        fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                        <option>SUPER_ADMIN</option>
+                        <option>ADMIN</option>
+                    </Select>
                 </Box>
                 <Flex gap={"4"} >
                     <Box w={"full"} >
