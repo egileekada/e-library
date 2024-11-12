@@ -102,7 +102,7 @@ function Pagination(props: Props) {
                     </Flex>
                 )}
                 <Flex width={"full"} position={"absolute"} gap={"2"} justifyContent={"end"} alignItems={"center"} right={"0px"} >
-                    <Text color={"#333"} lineHeight={"20.3px"} fontSize={"14px"} >Users Per Page</Text>
+                    <Text color={"#333"} lineHeight={"20.3px"} fontSize={"14px"} >Data Per Page</Text>
                     <Select defaultValue={limit} onChange={(e) => setLimit(Number(e.target.value))} bgColor={"white"} width={"fit-content"} border={"1.12px solid #D0D5DD"} rounded={"6.75px"} >
                         <option>10</option>
                         <option>20</option>
@@ -111,6 +111,9 @@ function Pagination(props: Props) {
                         <option>50</option>
                         <option>60</option>
                         <option>70</option>
+                        <option>80</option>
+                        <option>90</option>
+                        <option>100</option>
                     </Select>
                 </Flex>
             </Flex>

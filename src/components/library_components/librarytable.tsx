@@ -52,8 +52,7 @@ function Librarytable(props: Props) {
             setPage(data?.data?.page)
             setLimit(60)
             setTotal(data?.data?.total)
-            setData(data?.data?.data)
-            console.log(data?.data?.data)  
+            setData(data?.data?.data)  
         }
     })
     return (

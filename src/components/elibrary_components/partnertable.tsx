@@ -47,9 +47,7 @@ function Partnertable(props: Props) {
                                     </GridItem>
                                 )
                             })}
-                            {results?.map((item: IPartner, index: number) => {
-                                console.log(index);
-
+                            {results?.map((item: IPartner, index: number) => {  
                                 if (results.length === index + 1) {
                                     return (
                                         <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
