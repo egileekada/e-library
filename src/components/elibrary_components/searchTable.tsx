@@ -45,6 +45,9 @@ function Searchtable(props: Props) {
             console.log(error);
         },
         onSuccess: (data: any) => {
+
+            console.log(data?.data?.total);
+            
             setPage(data?.data?.page)
             setLimit(data?.data?.limit)
             setTotal(data?.data?.total)

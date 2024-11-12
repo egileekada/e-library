@@ -54,12 +54,11 @@ function Partnertable(props: Props) {
             });
         },
 
-        onSuccess: (data: any) => {
-            // setPage(data?.data?.page)
-            // setLimit(data?.data?.limit)
-            setTotal(data?.data?.total)
-            // setData(data?.data?.data);
-            setDataInfo(data?.data?.data);
+        onSuccess: (data: any) => { 
+            if(!search) {
+                setTotal(data?.data?.total) 
+                setDataInfo(data?.data?.data);
+            }
         }
 
     })
@@ -86,21 +85,12 @@ function Partnertable(props: Props) {
                                     )
                                 }
                             })}
-                            {results?.map((item: IPartner, index: number) => {
-                                // if (results.length === index + 1) {
-
-                                //     return (
-                                //         <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
-                                //             <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
-                                //         </GridItem>
-                                //     )
-                                // } else {
+                            {results?.map((item: IPartner, index: number) => { 
                                 return (
                                     <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
                                         <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
                                     </GridItem>
-                                )
-                                // }
+                                ) 
                             })}
                             {(isRefetching && !isLoading) && (
                                 <GridItem display={"flex"} justifyContent={"center"} alignItems={"center"} >
