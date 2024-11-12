@@ -1,12 +1,15 @@
-import { Grid, GridItem, Spinner } from '@chakra-ui/react';
-import { useState } from 'react'
+import { Grid, GridItem, Spinner, useToast } from '@chakra-ui/react';
+import { useEffect, useState } from 'react'
 import filterdata from '../../store/filterdata';
 import Tiles from './tiles';
 import { IPartner } from '../../models';
 import LoadingAnimation from '../shared_components/loading_animation';
 import PinData from './pinneddata';
 import Searchtable from './searchTable';
-import InfiniteScrollerComponent from '../../util/infiniteScrollerComponent';
+// import InfiniteScrollerComponent from '../../util/infiniteScrollerComponent';
+import { cleanup } from '../../util/cleanup';
+import { useQuery } from 'react-query';
+import actionService from '../../connections/getdataaction';
 
 interface Props {
     page: number;
@@ -27,9 +30,43 @@ function Partnertable(props: Props) {
 
     const { search } = filterdata((state) => state);
     const [loading, setLoading] = useState(false)
+    // const [showPinned, setShowPinned] = useState(false)
+    // const [PinnedLength, setPinnedLength] = useState(0)
     const [data, setData] = useState([] as Array<IPartner>)
+    const [results, setDataInfo] = useState([] as Array<IPartner>)
 
-    const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/partner/filter`, limit: 20, filter: "id" })
+    const toast = useToast()
+
+    // const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/partner/filter`, limit: 20, filter: "id" })
+
+
+    const { isLoading, isRefetching } = useQuery(['partner', search, page, limit], () => actionService.getservicedata(`/partner/filter`,
+        {
+            ...cleanup({
+                page: page,
+                limit: limit
+            }),
+        }), {
+        onError: () => {
+            toast({
+                status: "error",
+                title: "Error occured",
+            });
+        },
+
+        onSuccess: (data: any) => {
+            // setPage(data?.data?.page)
+            // setLimit(data?.data?.limit)
+            setTotal(data?.data?.total)
+            // setData(data?.data?.data);
+            setDataInfo(data?.data?.data);
+        }
+
+    })
+
+    useEffect(() => {
+        setPage(1)
+    }, [search])
 
     return (
         <>
@@ -41,26 +78,29 @@ function Partnertable(props: Props) {
                     <LoadingAnimation loading={isLoading && loading} >
                         <Grid templateColumns='repeat(3, 1fr)' gap={4} py={"4"}>
                             {data?.map((item: IPartner, index: number) => {
-                                return (
-                                    <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
-                                        <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
-                                    </GridItem>
-                                )
-                            })}
-                            {results?.map((item: IPartner, index: number) => {  
-                                if (results.length === index + 1) {
-                                    return (
-                                        <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
-                                            <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
-                                        </GridItem>
-                                    )
-                                } else {
+                                if (page === 1) {
                                     return (
                                         <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
                                             <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
                                         </GridItem>
                                     )
                                 }
+                            })}
+                            {results?.map((item: IPartner, index: number) => {
+                                // if (results.length === index + 1) {
+
+                                //     return (
+                                //         <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} ref={ref} >
+                                //             <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                //         </GridItem>
+                                //     )
+                                // } else {
+                                return (
+                                    <GridItem key={index} w={"full"} borderWidth={"0.5px"} rounded={"10px"} bgColor={"#FCFCFC"} borderColor={"#BDBDBD"} >
+                                        <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
+                                    </GridItem>
+                                )
+                                // }
                             })}
                             {(isRefetching && !isLoading) && (
                                 <GridItem display={"flex"} justifyContent={"center"} alignItems={"center"} >
