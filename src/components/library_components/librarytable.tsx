@@ -20,8 +20,7 @@ function Librarytable(props: Props) {
     const {
         limit,
         page,
-        setPage,
-        setLimit,
+        setPage, 
         setTotal
     } = props
 
@@ -49,8 +48,7 @@ function Librarytable(props: Props) {
             console.log(error)
         },
         onSuccess: (data: any) => {
-            setPage(data?.data?.page)
-            setLimit(60)
+            setPage(data?.data?.page) 
             setTotal(data?.data?.total)
             setData(data?.data?.data)  
         }

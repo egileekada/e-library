@@ -10,7 +10,7 @@ function LibraryPage(props: Props) {
     const {} = props
 
     const [page, setPage] = useState(1)
-    const [limit, setLimit] = useState(60)
+    const [limit, setLimit] = useState(20)
     const [totalItem, setTotalItem] = useState(0) 
 
     return (
