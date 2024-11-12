@@ -25,8 +25,7 @@ function EquipmentTable(props: Props) {
         tableRef,
         limit,
         page,
-        setPage,
-        setLimit,
+        // setPage, 
         setTotal,
         setDataInfo
     } = props
@@ -56,8 +55,8 @@ function EquipmentTable(props: Props) {
 
         },
         onSuccess: (data: any) => {
-            setPage(data?.data?.page)
-            setLimit(data?.data?.limit)
+            // setPage(data?.data?.page)
+            // setLimit(data?.data?.limit)
             setTotal(data?.data?.total)
             setData(data?.data?.data);
             setDataInfo(data?.data?.data);

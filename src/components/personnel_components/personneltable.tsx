@@ -23,8 +23,8 @@ function Admintable(props: Props) {
         // tableRef,
         limit,
         page,
-        setPage,
-        setLimit,
+        // setPage,
+        // setLimit,
         setTotal,
         setDataInfo
     } = props
@@ -55,9 +55,7 @@ function Admintable(props: Props) {
             console.log(error);
 
         },
-        onSuccess: (data: any) => {
-            setPage(data?.data?.page)
-            setLimit(data?.data?.limit)
+        onSuccess: (data: any) => { 
             setTotal(data?.data?.total)
             setData(data?.data?.data);
             setDataInfo(data?.data?.data);
