@@ -5,6 +5,7 @@ import Borrowbtn from './borrowbtn'
 import { useNavigate } from 'react-router-dom'
 import Returnbtn from './returnbtn'
 import { capitalizeFLetter } from '../../util/capitalLetter'
+import { textLimit } from '../../util/textlimit'
 // import React from 'react' 
 
 function Tiles(props: ILibrary) {
@@ -55,8 +56,8 @@ function Tiles(props: ILibrary) {
                 </Flex> 
                 {statuscomponent(status ? status : "")}
             </Flex>
-            <Text color={"#1E1B39"} lineHeight={"21.7px"} fontSize={"18px"} fontWeight={"600"} mt={"4"} >{capitalizeFLetter(name)}</Text>
-            <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >Author: {author}</Text>
+            <Text color={"#1E1B39"} lineHeight={"21.7px"} fontSize={"18px"} fontWeight={"600"} mt={"4"} >{textLimit(capitalizeFLetter(name), 30)}</Text>
+            <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >Author: {textLimit(author+"", 30)}</Text>
             {ISBN && (
                 <Text fontSize={"14px"} lineHeight={"23.2px"} color={"#828282"} >ISBN: {ISBN}</Text>
             )}
