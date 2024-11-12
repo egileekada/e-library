@@ -1,4 +1,4 @@
-import { Grid, GridItem, Spinner, useToast } from '@chakra-ui/react';
+import { Grid, GridItem, useToast } from '@chakra-ui/react';
 import { useEffect, useState } from 'react'
 import filterdata from '../../store/filterdata';
 import Tiles from './tiles';
@@ -74,7 +74,7 @@ function Partnertable(props: Props) {
             )}
             {!search && (
                 <>
-                    <LoadingAnimation loading={isLoading && loading} >
+                    <LoadingAnimation loading={isLoading && loading} refeching={isRefetching} >
                         <Grid templateColumns='repeat(3, 1fr)' gap={4} py={"4"}>
                             {data?.map((item: IPartner, index: number) => {
                                 if (page === 1) {
@@ -92,11 +92,11 @@ function Partnertable(props: Props) {
                                     </GridItem>
                                 ) 
                             })}
-                            {(isRefetching && !isLoading) && (
+                            {/* {(isRefetching && !isLoading) && (
                                 <GridItem display={"flex"} justifyContent={"center"} alignItems={"center"} >
                                     <Spinner />
                                 </GridItem>
-                            )}
+                            )} */}
                         </Grid>
                     </LoadingAnimation>
                     <PinData setLoading={setLoading} setdata={setData} />

@@ -48,7 +48,7 @@ function Pagination(props: Props) {
                         {new Array(totaldata).fill("").map((_, i) => {
                             if ((i + 1) <= 3) {
                                 return (
-                                    <Flex key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
+                                    <Flex onClick={() => setPage(i+ 1)} as='button' key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
                                         {i + 1}
                                     </Flex>
                                 )
@@ -57,7 +57,7 @@ function Pagination(props: Props) {
                                     <Flex w={"fit-content"} gap={"2"} >
                                         <Text>...</Text>
                                         {((i + 1) === page || (totaldata - 1) === 4 || totaldata === 4) && (
-                                            <Flex key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
+                                            <Flex key={i} onClick={() => setPage(i+ 1)} as='button' fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
                                                 {i + 1}
                                             </Flex>
                                         )}
@@ -70,7 +70,7 @@ function Pagination(props: Props) {
                                 console.log("gello");
                                 return (
                                     <Flex w={"fit-content"} gap={"2"} >
-                                        <Flex key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
+                                        <Flex key={i} onClick={() => setPage(i+ 1)} as='button' fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
                                             {i + 1}
                                         </Flex>
 
@@ -80,7 +80,7 @@ function Pagination(props: Props) {
                             } else if ((i + 1) === (totaldata - 1) && i !== 2) {
                                 return (
                                     <Flex w={"fit-content"} gap={"2"} >
-                                        <Flex key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
+                                        <Flex key={i} onClick={() => setPage(i+ 1)} as='button' fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
                                             {i + 1}
                                         </Flex>
                                     </Flex>
@@ -89,7 +89,7 @@ function Pagination(props: Props) {
                             else if ((i + 1) === totaldata && i !== 2) {
                                 return (
                                     <Flex w={"fit-content"} gap={"2"} >
-                                        <Flex key={i} fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
+                                        <Flex key={i} onClick={() => setPage(i+ 1)} as='button' fontSize={"12px"} border={(i + 1) === page ? "1px solid #BDBDBD" : ""} bgColor={(i + 1) === page ? "#F2F2F2" : ""} justifyContent={"center"} alignItems={"center"} width={"35px"} height={"35px"} rounded={"full"} >
                                             {i + 1}
                                         </Flex>
                                     </Flex>
