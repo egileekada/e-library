@@ -17,7 +17,7 @@ function Searchbar(props: Props) {
     }, [])
 
     return (
-        <InputComponent value={search ? search : ""} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setSearchValue(e.target.value)} type={'text'} left={true} leftIcon={<SearchIcon />} placeholder="Search for data" />
+        <InputComponent value={search ? search : ""} onChange={(e: React.ChangeEvent<HTMLInputElement>)=> setSearchValue(e.target.value)} type={'search'} left={true} leftIcon={<SearchIcon />} placeholder="Search for data" />
     ) 
 }
 

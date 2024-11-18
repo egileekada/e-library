@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Flex, Select, Text, useToast } from '@chakra-ui/react'
 // import React from 'react'
 import InputComponent from '../shared_components/custom_input'
 import ImageSelector from '../shared_components/image_selector'
@@ -8,6 +8,8 @@ import { useFormik } from 'formik';
 import { useQueryClient, useMutation } from 'react-query';
 import { useAddPartnerCallback, useUpdatePartnerCallback, useUploaderCallback } from '../../connections/useaction';
 import { IPartner } from '../../models';
+import { motion } from 'framer-motion';
+// import findEmptyFields from '../../util/findEmptyField';
 
 interface Props {
     close: (by: boolean) => void
@@ -37,6 +39,7 @@ function Portalform(props: Props) {
         partnerName: yup.string().required('required'),
         partnerResourceName: yup.string().required('required'),
         partnerResourceUrl: yup.string().required('required'),
+        category: yup.string().required('required'),
     })
 
     // formik
@@ -44,7 +47,8 @@ function Portalform(props: Props) {
         initialValues: {
             partnerName: "",
             partnerResourceName: "",
-            partnerResourceUrl: ""
+            partnerResourceUrl: "",
+            category: ""
         },
         validationSchema: partnerSchema,
         onSubmit: () => { },
@@ -146,9 +150,7 @@ function Portalform(props: Props) {
                         });
                     });
 
-            }
-
-
+            } 
             return response;
         } else if (response?.data?.statusCode === 400) {
             toast({
@@ -169,8 +171,21 @@ function Portalform(props: Props) {
             partnerName: formik.values.partnerName,
             partnerResourceName: formik.values.partnerResourceName,
             partnerResourceUrl: formik.values.partnerResourceUrl,
+            category: formik.values?.category
         };
 
+        // const emptyFields = findEmptyFields(partnerData);
+
+        // if (emptyFields?.length > 0) {
+        //     toast({
+        //         title: "You have to fill in the form to continue",
+        //         status: "error",
+        //         duration: 3000,
+        //         position: "top",
+        //     });
+        //     // toast?.error(`Enter your ${emptyFields[0]}`)
+        //     return;
+        // }
         if (!formik.dirty || !formik.isValid) {
             toast({
                 title: "You have to fill in the form to continue",
@@ -227,7 +242,7 @@ function Portalform(props: Props) {
 
     }
 
-    useEffect(() => { 
+    useEffect(() => {
 
         if (edit) {
             formik.setFieldValue("partnerName", data?.partnerName)
@@ -235,7 +250,7 @@ function Portalform(props: Props) {
             formik.setFieldValue("partnerResourceUrl", data?.partnerResourceUrl)
             setImageName(data?.imageUrl ? data?.imageUrl : "")
         }
-    }, [data])    
+    }, [data])
 
     return (
         <form style={{ width: "full" }} onSubmit={(e) => submit(e)} >
@@ -263,6 +278,33 @@ function Portalform(props: Props) {
                         value={formik?.values?.partnerResourceName}
                         touch={formik.touched.partnerResourceName}
                         error={formik.errors.partnerResourceName} placeholder="Partner ResourceName" type='text' />
+                </Box>
+                <Box w={"full"} >
+                    <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Partner Category</Text>
+                    {/* <InputComponent
+                        name="partnerResourceName"
+                        onChange={formik.handleChange}
+                        onFocus={() =>
+                            formik.setFieldTouched("partnerResourceName", true, true)
+                        }
+                        value={formik?.values?.partnerResourceName}
+                        touch={formik.touched.partnerResourceName}
+                        error={formik.errors.partnerResourceName} placeholder="Partner ResourceName" type='text' /> */}
+                    <Select name="category" mt={"6px"}
+                        onChange={formik.handleChange}
+                        onFocus={() =>
+                            formik.setFieldTouched("category", true, true)
+                        }
+                        value={formik?.values?.category}
+                        textColor="#000" placeholder='Select Category' fontSize="14px" fontWeight="400" bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                        <option value={"BOOKS"} >Books</option>
+                        <option value={"AFFILIATE"} >Affiliate</option>
+                    </Select>
+                    {formik.touched?.category && formik.errors?.category && (
+                        <Text as={motion.p}
+                            initial={{ y: -100, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }} color="#E84545" fontWeight="600" fontSize="xs" mt="3px" textAlign="left" >{formik.errors?.category}</Text>
+                    )}
                 </Box>
                 <Box w={"full"} >
                     <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Partner Link</Text>

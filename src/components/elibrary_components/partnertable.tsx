@@ -17,6 +17,7 @@ interface Props {
     limit: number;
     setLimit: (by: number) => void;
     setTotal: (by: number) => void;
+    type?: string
 }
 
 function Partnertable(props: Props) {
@@ -25,26 +26,26 @@ function Partnertable(props: Props) {
         page,
         setPage,
         setLimit,
-        setTotal
+        setTotal,
+        type
     } = props
 
     const { search } = filterdata((state) => state);
     const [loading, setLoading] = useState(false)
-    // const [showPinned, setShowPinned] = useState(false)
-    // const [PinnedLength, setPinnedLength] = useState(0)
     const [data, setData] = useState([] as Array<IPartner>)
-    const [results, setDataInfo] = useState([] as Array<IPartner>)
+    const [results, setDataInfo] = useState([] as Array<IPartner>) 
 
     const toast = useToast()
 
     // const { results, isLoading, ref, isRefetching } = InfiniteScrollerComponent({ url: `/partner/filter`, limit: 20, filter: "id" })
 
 
-    const { isLoading, isRefetching } = useQuery(['partner', search, page, limit], () => actionService.getservicedata(`/partner/filter`,
+    const { isLoading, isRefetching } = useQuery(['partner', search, page, limit, type], () => actionService.getservicedata(`/partner/filter`,
         {
             ...cleanup({
                 page: page,
-                limit: limit
+                limit: limit,
+                category: type
             }),
         }), {
         onError: () => {
@@ -74,7 +75,7 @@ function Partnertable(props: Props) {
             )}
             {!search && (
                 <>
-                    <LoadingAnimation loading={isLoading && loading} refeching={isRefetching} >
+                    <LoadingAnimation length={data?.length && results?.length} loading={isLoading && loading} refeching={isRefetching} >
                         <Grid templateColumns='repeat(3, 1fr)' gap={4} py={"4"}>
                             {data?.map((item: IPartner, index: number) => {
                                 if (page === 1) {
