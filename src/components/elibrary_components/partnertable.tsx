@@ -100,7 +100,7 @@ function Partnertable(props: Props) {
                             )} */}
                         </Grid>
                     </LoadingAnimation>
-                    <PinData setLoading={setLoading} setdata={setData} />
+                    <PinData type={type} setLoading={setLoading} setdata={setData} />
                 </>
             )}
         </>
