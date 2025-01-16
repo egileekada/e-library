@@ -235,8 +235,7 @@ export default function ForgatPasswordPage() {
                     position: "top",
                 });
                 return;
-            }
-
+            }  
             const loginData = {
                 password: formikPassword.values.password,
                 id: id + ""
