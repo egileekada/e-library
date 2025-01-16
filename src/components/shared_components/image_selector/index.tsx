@@ -1,5 +1,6 @@
 import { Flex, Text, useToast } from '@chakra-ui/react'
 import { useState } from 'react';
+import { textLimit } from '../../../util/textlimit';
 // import React from 'react'
 
 interface Props { 
@@ -42,7 +43,7 @@ function ImageSelector(props: Props) {
 
             <label role='button' style={{ width: "100%", height: "45px", borderRadius: "5px", justifyContent: "center", alignItems: "center", display: "flex" }}  >
                 <input type="file" onChange={handleImageChange} style={{ display: "none" }} />
-                <Text color={imageName ? "name" : "#909090"} lineHeight={"20.3px"} textAlign={"center"} fontSize={"14px"} >{image ? image : imageName ? imageName: imageInfo ? imageInfo : "Click to upload"}</Text>
+                <Text color={imageName ? "name" : "#909090"} lineHeight={"20.3px"} textAlign={"center"} fontSize={"14px"} >{ imageName ? imageName: image ? textLimit(image, 50) : imageInfo ? imageInfo : "Click to upload"}</Text>
             </label>
         </Flex>
     )

@@ -13,6 +13,7 @@ import LibraryPage from './pages/library';
 import LibraryInfo from './pages/library_info';
 import PartnerInfo from './pages/partner_info';
 import Transaction from './pages/transaction';
+import ForgatPasswordPage from './pages/forgotpassword';
 // import Home from './pages/home';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <Route path="/">
         {/* <Route index element={<Home />} /> */}
         <Route index element={<LoginPage />} />
+        <Route path='/forgot' element={<ForgatPasswordPage />} />
         <Route path='/home/info' element={<PartnerInfo />} />
         <Route path='/dashboard' element={<DashboardLayout />} >
           <Route path='/dashboard/home' element={<DashboardPage />} />

@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react'
 import { FileColored, Notification } from '../svg'
 import { useLocation } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 // import React from 'react'
 
 interface Props { }
@@ -11,7 +12,15 @@ function Navbar(props: Props) {
     const path = useLocation()
 
     let name = localStorage.getItem("name") as string
+    let pic = localStorage.getItem("profilePicture") as string
 
+    const [nameData, setNameData] = useState("")
+    const [picData, setPicData] = useState("")
+
+    useEffect(()=> {
+        setNameData(name)
+        setPicData(pic)
+    }, [name, pic])
 
 
     return (
@@ -55,9 +64,9 @@ function Navbar(props: Props) {
             <Flex alignItems={"center"} >
                 <Notification />
                 <Box width={"36px"} height={"36px"} rounded={"full"} bgColor={"#D9D9D9"} ml={"6"} >
-                    <Image w={"full"} h={"full"} rounded={"full"} src={"/avatar.png"} objectFit={"cover"} alt='profile' />
+                    <Image w={"full"} h={"full"} rounded={"full"} src={picData ?? "/avatar.png"} objectFit={"cover"} alt='profile' />
                 </Box>
-                <Text color={"#010203"} lineHeight={"19.36px"} ml={"2"} >{name?.length > 12 ? name?.slice(0, 12) + "..." : name}</Text>
+                <Text color={"#010203"} lineHeight={"19.36px"} ml={"2"} >{name?.length > 12 ? name?.slice(0, 12) + "..." : nameData}</Text>
             </Flex>
         </Flex>
     )

@@ -163,6 +163,7 @@ export default function LoginPage() {
                             touch={formik.touched.password}
                             error={formik.errors.password}
                             type="password" placeholder="Password" />
+                            <Text role="button" onClick={()=> navigate("/forgot")} color={"#1F7CFF"} fontWeight={"600"} fontSize={"14px"} mt={"1"} >Forgot password</Text>
                     </Box>
 
                     <Button type="submit" h={"45px"} isLoading={loginMutation.isLoading} isDisabled={(!formik.values.email && !formik.values.password) || loginMutation.isLoading ? true : false} marginTop={"3"} rounded={"5px"} width={"full"} mt={"4"} bgColor={"#1F7CFF"} _hover={{ backgroundColor: "#1F7CFF" }} display={"flex"} alignItems={"center"} justifyContent={"center"} color={"white"} >

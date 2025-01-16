@@ -180,6 +180,22 @@ export function useRecordBorrowCallback() {
   return { handleRecordBorrow }
 }
 
+
+export function useEditProfileCallback() {
+  const handleEditProfile = async (postData: object, adminId: any ): Promise<any> => {
+    try {
+      const response = await axios.put(`/admin/update-details/${adminId}`, postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleEditProfile }
+}
+
 export function useReturnRecordCallback() {
   const handleReturnRecord = async (postData: {
     recordId: string,

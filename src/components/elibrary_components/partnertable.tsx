@@ -92,12 +92,7 @@ function Partnertable(props: Props) {
                                         <Tiles id={item?.id} imageUrl={item?.imageUrl} partnerName={item?.partnerName} partnerResourceName={item?.partnerResourceName} partnerResourceUrl={item?.partnerResourceUrl} pinned={item?.pinned} />
                                     </GridItem>
                                 ) 
-                            })}
-                            {/* {(isRefetching && !isLoading) && (
-                                <GridItem display={"flex"} justifyContent={"center"} alignItems={"center"} >
-                                    <Spinner />
-                                </GridItem>
-                            )} */}
+                            })} 
                         </Grid>
                     </LoadingAnimation>
                     <PinData type={type} setLoading={setLoading} setdata={setData} />
