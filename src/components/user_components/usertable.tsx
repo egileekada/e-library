@@ -76,7 +76,7 @@ function Usertable(props: Props) {
                     <Thead>
                         <Tr>
                             <Th><Checkbox size={"lg"} /></Th>
-                            <Th>ID</Th>
+                            {/* <Th>ID</Th> */}
                             <Th>Image</Th>
                             <Th>Name</Th>
                             <Th>Role</Th>
@@ -91,9 +91,9 @@ function Usertable(props: Props) {
                             return (
                                 <Tr role='button' onClick={() => clickHandler(item?.id + "")} fontSize={"14px"} key={index} >
                                     <Td><Checkbox size={"lg"} /></Td>
-                                    <Td>{item?.id}</Td>
+                                    {/* <Td>{item?.id}</Td> */}
                                     <Td>
-                                        <Box w={"48px"} h={"48px"} borderWidth={"3px"} rounded={"full"} >
+                                        <Box w={"48px"} h={"48px"} borderWidth={"1px"} rounded={"full"} >
                                             <Image w={"full"} h={"full"} rounded={"full"} src={item?.profilePicture ? item?.profilePicture : "/avatar.png"} objectFit={"cover"} alt='image' />
                                         </Box>
                                     </Td>

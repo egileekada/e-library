@@ -257,6 +257,7 @@ function Libraryform(props: Props) {
         "Space Opera",
         "Crime",
         "Detective",
+        "Legal",
         "Legal Thriller",
         "Psychological Thriller",
         "Contemporary Romance",

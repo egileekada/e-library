@@ -42,7 +42,7 @@ function LibraryInfo(props: Props) {
 
         },
         onSuccess: (data: any) => {
-            setData(data?.data?.data); 
+            setData(data?.data?.data);
 
         }
     })
@@ -51,7 +51,7 @@ function LibraryInfo(props: Props) {
         if (!userId) {
             navigate("/dashboard/user")
         }
-    }, [])  
+    }, [])
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
@@ -78,9 +78,12 @@ function LibraryInfo(props: Props) {
                         <Flex mt={"auto"} alignItems={"center"} justifyItems={"center"} gap={"4"} >
                             {(data?.status === "NOT_AVAILABLE" && data?.Borrowing) && (
                                 <Box w={"200px"} >
-                                    <Returnbtn borrowId={data?.Borrowing?.length > 0  ? data?.Borrowing[0]?.id : ""} {...data} />
+                                    <Returnbtn borrowId={data?.Borrowing?.length > 0 ? data?.Borrowing[0]?.id : ""} {...data} />
                                 </Box>
                             )}
+                            {/* <Box w={"200px"} >
+                                <Button h={"45px"} gap={"2"} rounded={"5px"} width={"full"} px={"8"} fontWeight={"600"} fontSize={"14px"} bgColor={"#1F7CFF"} color={"white"} _hover={{backgroundColor: "#1F7CFF"}} >Edit Record</Button>
+                            </Box> */}
                             <DeleteRecords id={data?.id} />
                         </Flex>
                     </Flex>

@@ -238,11 +238,11 @@ export default function ForgatPasswordPage() {
             }  
             const loginData = {
                 password: formikPassword.values.password,
-                id: id + ""
+                id: (id) + ""
             }; 
             PasswordMutation.mutateAsync(loginData, {
                 onSuccess: () => {
-
+    
                 },
             })
                 .catch(() => {

@@ -48,8 +48,9 @@ function DashboardPage() {
             
             setData(data?.data?.data); 
         }
-    })
-
+        
+    }) 
+    
     return (
         <LoadingAnimation loading={isLoading} >
             <Flex flexDir={"column"} gap={"4"} py={"6"} width={"full"} height={"full"} >

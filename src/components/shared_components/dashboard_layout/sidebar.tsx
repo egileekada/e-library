@@ -116,13 +116,15 @@ function Sidebar(props: Props) {
 
     const [userData, setData] = useState({
         name: name, 
-        phone: phone
+        phone: phone, 
+        email: email
     })
 
     useEffect(() => {
         setData({
             name: name,
-            phone: phone
+            phone: phone,
+            email: email
         })
     }, [])
 
@@ -308,7 +310,7 @@ function Sidebar(props: Props) {
                     </Flex>
                     <Flex flexDir={"column"} gap={"1"} >
                         <Text>Email</Text>
-                        <Input w={"full"} disabled={true} value={email + ""} />
+                        <Input w={"full"} value={userData?.email + ""} onChange={(e) => setData({ ...userData, email: e.target.value })}  />
                     </Flex>
                     <Flex flexDir={"column"} gap={"1"} >
                         <Text>Role</Text>

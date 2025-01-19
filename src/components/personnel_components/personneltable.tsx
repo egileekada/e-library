@@ -69,7 +69,7 @@ function Admintable(props: Props) {
                     <Thead>
                         <Tr>
                             <Th><Checkbox size={"lg"} /></Th>
-                            <Th>ID</Th>
+                            {/* <Th>ID</Th> */}
                             <Th>Image</Th>
                             <Th>Name</Th>
                             <Th>Email</Th>
@@ -82,7 +82,7 @@ function Admintable(props: Props) {
                             return (
                                 <Tr fontSize={"14px"} key={index} >
                                     <Td><Checkbox size={"lg"} /></Td>
-                                    <Td>{item?.id}</Td>
+                                    {/* <Td>{item?.id}</Td> */}
                                     <Td>
                                         {/* {item?.profilePicture && ( */}
                                         <Box w={"48px"} h={"48px"} borderWidth={"3px"} rounded={"full"} >
