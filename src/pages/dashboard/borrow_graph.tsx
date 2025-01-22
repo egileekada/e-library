@@ -12,7 +12,7 @@ export default function BorrowGraph(props: IProps) {
 
     const {
         available,
-        overdue,
+        overdue, 
         borrow
     } = props  
 

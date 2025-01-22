@@ -50,6 +50,9 @@ function DashboardPage() {
         }
         
     }) 
+
+
+    console.log(data);
     
     return (
         <LoadingAnimation loading={isLoading} >
@@ -62,7 +65,7 @@ function DashboardPage() {
                     </Flex>
                     <Flex flexDir={"column"} border={"1px solid #E7E7E7"} pt={"6"} px={"6"} rounded={"lg"} shadow={"md"}  >
                         <Text fontWeight={"bold"} fontSize={"2xl"} >Borrowed Records %</Text>
-                        <BorrowGraph available={data?.borrow?.availablePercentage} overdue={data?.borrow?.overduePercentage} borrow={100 - (data?.borrow?.availablePercentage + data?.borrow?.overduePercentage)} />
+                        <BorrowGraph available={data?.borrow?.availablePercentage} overdue={data?.borrow?.overduePercentage} borrow={data?.borrow?.total} />
                     </Flex> 
                 </Flex>
                 {/* <BarChart /> */}
