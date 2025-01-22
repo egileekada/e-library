@@ -65,6 +65,22 @@ function Otherfilter(props: Props) {
         },
     ]
 
+
+    const datatype = [
+        {
+            name: "Journal",
+            value: "JOURNAL"
+        },
+        {
+            name: "Book",
+            value: "BOOK"
+        },
+        {
+            name: "Report",
+            value: "REPORT"
+        },
+    ]
+
     const path = useLocation()
 
     const closeHandler = () => {
@@ -147,6 +163,21 @@ function Otherfilter(props: Props) {
                             <RadioGroup onChange={(e) => setInitialFilter({ ...initialFilter, status: e })} value={initialFilter?.status}>
                                 <Stack direction='row'>
                                     {datastate?.map((item: {
+                                        name: string,
+                                        value: string
+                                    }, index: number) => {
+                                        return (
+                                            <Radio key={index} value={item?.value} >{item?.name}</Radio>
+                                        )
+                                    })}
+                                </Stack>
+                            </RadioGroup> 
+                        </Box>
+                        <Box w={"full"} >
+                            <Text fontSize={"14px"} fontWeight={"600"} mb={"1"} textAlign={"left"} >Types</Text> 
+                            <RadioGroup onChange={(e) => setInitialFilter({ ...initialFilter, type: e })} value={initialFilter?.type}>
+                                <Stack direction='row'>
+                                    {datatype?.map((item: {
                                         name: string,
                                         value: string
                                     }, index: number) => {

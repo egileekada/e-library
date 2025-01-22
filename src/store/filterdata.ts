@@ -4,6 +4,7 @@ type State = {
     search: string,
     filter: {
         status?: string
+        type?: string
         state?: string
         isbn?: string
         issn?: string
