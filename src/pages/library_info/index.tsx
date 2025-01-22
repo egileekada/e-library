@@ -14,6 +14,8 @@ import DeleteRecords from '../../components/library_components/delete_records'
 import ModalLayout from '../../components/shared_components/modal_layout'
 import Qrcode from '../../components/shared_components/qrcode'
 import { capitalizeFLetter } from '../../util/capitalLetter'
+import EditLibrarybtn from '../../components/library_components/editlibrarybtn'
+import recorddata from '../../store/recordtype'
 
 interface Props { }
 
@@ -24,6 +26,9 @@ function LibraryInfo(props: Props) {
     const [open, setOpen] = useState(false)
     const [data, setData] = useState({} as ILibrary)
 
+
+
+    const role = localStorage.getItem("role");
     const userId = localStorage.getItem("library")
 
     const navigate = useNavigate()
@@ -31,6 +36,8 @@ function LibraryInfo(props: Props) {
     focusManager.setFocused(false)
 
     // const param
+
+    const { setRecordType } = recorddata((state) => state);
 
     const { isLoading, isRefetching } = useQuery(['libraryinfo', userId], () => actionService.getservicedata(`/record/record/${Number(userId)}`), {
         onError: (error: any) => {
@@ -44,6 +51,7 @@ function LibraryInfo(props: Props) {
         onSuccess: (data: any) => {
             setData(data?.data?.data);
 
+            setRecordType(data?.data?.data?.type)
         }
     })
 
@@ -52,6 +60,11 @@ function LibraryInfo(props: Props) {
             navigate("/dashboard/user")
         }
     }, [])
+
+
+    useEffect(() => { 
+        setRecordType(data?.type+"")
+    }, [data?.type])
 
     return (
         <LoadingAnimation loading={isLoading} refeching={isRefetching} >
@@ -80,11 +93,11 @@ function LibraryInfo(props: Props) {
                                 <Box w={"200px"} >
                                     <Returnbtn borrowId={data?.Borrowing?.length > 0 ? data?.Borrowing[0]?.id : ""} {...data} />
                                 </Box>
-                            )}
-                            {/* <Box w={"200px"} >
-                                <Button h={"45px"} gap={"2"} rounded={"5px"} width={"full"} px={"8"} fontWeight={"600"} fontSize={"14px"} bgColor={"#1F7CFF"} color={"white"} _hover={{backgroundColor: "#1F7CFF"}} >Edit Record</Button>
-                            </Box> */}
+                            )} 
                             <DeleteRecords id={data?.id} />
+                            {role === "SUPER_ADMIN" && (
+                                <EditLibrarybtn data={data} />
+                            )}
                         </Flex>
                     </Flex>
                 </Flex>

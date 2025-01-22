@@ -1,11 +1,12 @@
 import { Flex, Text, useToast } from '@chakra-ui/react'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { textLimit } from '../../../util/textlimit';
 // import React from 'react'
 
 interface Props { 
     image?: string
     setImage: (by: string) => void
+    defaultImage?: string; 
     imageInfo?: string, 
 }
 
@@ -13,6 +14,7 @@ function ImageSelector(props: Props) {
     const {
         image,
         setImage,
+        defaultImage, 
         imageInfo
     } = props
 
@@ -37,6 +39,12 @@ function ImageSelector(props: Props) {
             console.log('Error')
         }
     } 
+
+    useEffect(()=> {
+        if(defaultImage){
+            setImageName(defaultImage)
+        }
+    }, [imageName])
 
     return (
         <Flex h={"45px"} w={"full"} px={"4"} overflowX={"auto"} rounded={"5px"} justifyContent={"center"} alignItems={"center"} borderStyle={"dashed"} borderWidth={"1px"} borderColor={"#ADADAD"}  >

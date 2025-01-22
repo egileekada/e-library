@@ -3,7 +3,7 @@ import { Box, Button, Flex, Select, Text, useToast } from '@chakra-ui/react'
 import InputComponent from '../shared_components/custom_input'
 import ImageSelector from '../shared_components/image_selector'
 import * as yup from 'yup'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import { useQueryClient, useMutation } from 'react-query';
 import { useAddBookCallback, useAddJornalCallback, useAddReportCallback, useUploaderCallback } from '../../connections/useaction';
@@ -14,15 +14,17 @@ import QrcodeMultiple from '../shared_components/qrcodemultiple';
 
 interface Props {
     close?: any,
+    data?: ILibrary
 }
 
 function Libraryform(props: Props) {
     const {
         close,
+        data
     } = props
 
     const [imageFile, setImageFile] = useState("");
-    const [type, setType] = useState("Journal");
+    const [type, setType] = useState(data?.type ? data?.type : "Journal");
 
     const [index, setIndex] = useState(Array<ILibrary>)
 
@@ -36,7 +38,8 @@ function Libraryform(props: Props) {
         DOI?: string
     })
 
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient() 
+    
 
     const toast = useToast()
     const { handleAddBook } = useAddBookCallback();
@@ -70,6 +73,30 @@ function Libraryform(props: Props) {
         validationSchema: partnerSchema,
         onSubmit: () => { },
     });
+
+    useEffect(() => {
+        if (data?.name) {
+            formik?.setValues({
+                name: data?.name,
+                description: data?.description,
+                author: data?.author + "",
+                count: Number(data?.count),
+                publicationYear: data?.publicationYear + "",
+                language: data?.language + "",
+                category: data?.category + "",
+                value: data?.value + "",
+            })
+            setOtherData({
+                IDNumber: data?.IDNumber,
+                projectYear: data?.projectYear,
+                projectLocation: data?.projectLocation,
+                ISBN: data?.ISBN,
+                // ISSN: data?.ISSN,
+                // DOI: data?.DOI
+            })
+            setType(data?.type+"")
+        }
+    }, []) 
 
     //API call to handle adding user
     const addMutation = useMutation(async (formData: ILibrary) => {
@@ -278,6 +305,7 @@ function Libraryform(props: Props) {
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Name</Text>
                             <InputComponent
+                                value={formik?.values?.name}
                                 name="name"
                                 onChange={formik.handleChange}
                                 onFocus={() =>
@@ -288,7 +316,7 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Literature Type</Text>
-                            <Select onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                            <Select value={type} onChange={(e) => setType(e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 <option>Journal</option>
                                 <option>Book</option>
                                 <option>Report</option>
@@ -296,7 +324,7 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Value</Text>
-                            <Select placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
+                            <Select value={formik?.values?.value} placeholder='Select Value' onChange={(e) => formik.setFieldValue("value", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"} >
                                 <option value={"Less than ₦20,000"} >Less than ₦20,000</option>
                                 <option>₦20,000 - ₦40,000</option>
                                 <option>₦40,000 - ₦60,000</option>
@@ -307,7 +335,7 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Category</Text>
-                            <Select placeholder='Select Category' onChange={(e) => formik.setFieldValue("category", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
+                            <Select value={formik?.values?.category} placeholder='Select Category' onChange={(e) => formik.setFieldValue("category", e.target.value)} fontSize={"14px"} bgColor="#FCFCFC" borderColor="#BDBDBD" _hover={{ borderColor: "#BDBDBD" }} _focus={{ backgroundColor: "#FCFCFC" }} focusBorderColor="#BDBDBD" height={"45px"}>
                                 {book_categories?.map((item: string, index: number) => {
                                     return (
                                         <option key={index} >{item}</option>
@@ -317,57 +345,63 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Number Of Books</Text>
-                            <InputComponent
+                            <InputComponent 
                                 name="count"
                                 onChange={formik.handleChange}
                                 // onFocus={() =>
                                 //     formik.setFieldTouched("count", true, true)
                                 // }
-                                touch={formik.touched.count} 
-                                onFocus={(e: any) => {formik.setFieldTouched("count", true, true), e.target.addEventListener("wheel", function (e: any) { e.preventDefault() }, { passive: false })}}
+                                touch={formik.touched.count}
+                                onFocus={(e: any) => { formik.setFieldTouched("count", true, true), e.target.addEventListener("wheel", function (e: any) { e.preventDefault() }, { passive: false }) }}
                                 error={formik.errors.count} placeholder="Number Of Books" type='number' />
                         </Box>
                         {type === "Book" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter ISBN</Text>
-                                <InputComponent onChange={(e: any) => setOtherData({
-                                    ...otherData,
-                                    ISBN: e.target.value
-                                })} placeholder="" type='text' />
+                                <InputComponent
+                                    value={otherData?.ISBN} onChange={(e: any) => setOtherData({
+                                        ...otherData,
+                                        ISBN: e.target.value
+                                    })} placeholder="" type='text' />
                             </Box>
                         )}
                         {type === "Journal" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter ISSN</Text>
-                                <InputComponent onChange={(e: any) => setOtherData({
-                                    ...otherData,
-                                    ISSN: e.target.value
-                                })} placeholder="" type='text' />
+                                <InputComponent
+                                    value={otherData?.ISSN} onChange={(e: any) => setOtherData({
+                                        ...otherData,
+                                        ISSN: e.target.value
+                                    })} placeholder="" type='text' />
                             </Box>
                         )}
                         {type === "Journal" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter DOI(optional)</Text>
-                                <InputComponent onChange={(e: any) => setOtherData({
-                                    ...otherData,
-                                    DOI: e.target.value
-                                })} placeholder="" type='text' />
+                                <InputComponent
+                                    value={otherData?.DOI} onChange={(e: any) => setOtherData({
+                                        ...otherData,
+                                        DOI: e.target.value
+                                    })} placeholder="" type='text' />
                             </Box>
                         )}
                         {type === "Report" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter ID Number</Text>
-                                <InputComponent onChange={(e: any) => setOtherData({
-                                    ...otherData,
-                                    IDNumber: e.target.value
-                                })} placeholder="" type='text' />
+                                <InputComponent
+                                    value={otherData?.IDNumber} onChange={(e: any) => setOtherData({
+                                        ...otherData,
+                                        IDNumber: e.target.value
+                                    })} placeholder="" type='text' />
                             </Box>
                         )}
                         {type === "Report" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter Project Year</Text>
 
-                                <Yearselector onChange={(e: any) => setOtherData({
+                                <Yearselector 
+                                value={otherData?.projectYear}
+                                 onChange={(e: any) => setOtherData({
                                     ...otherData,
                                     projectYear: e.target.value
                                 })} />
@@ -376,10 +410,11 @@ function Libraryform(props: Props) {
                         {type === "Report" && (
                             <Box w={"full"} >
                                 <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Enter Project Location</Text>
-                                <InputComponent onChange={(e: any) => setOtherData({
-                                    ...otherData,
-                                    projectLocation: e.target.value
-                                })} placeholder="" type='text' />
+                                <InputComponent
+                                    value={otherData?.projectLocation} onChange={(e: any) => setOtherData({
+                                        ...otherData,
+                                        projectLocation: e.target.value
+                                    })} placeholder="" type='text' />
                             </Box>
                         )}
                         <Box w={"full"} >
@@ -387,6 +422,7 @@ function Libraryform(props: Props) {
                             <Yearselector
                                 name="publicationYear"
                                 onChange={formik.handleChange}
+                                value={formik?.values?.publicationYear}
                                 onFocus={() =>
                                     formik.setFieldTouched("publicationYear", true, true)
                                 }
@@ -397,6 +433,7 @@ function Libraryform(props: Props) {
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Author</Text>
                             <InputComponent
+                                value={formik?.values?.author}
                                 name="author"
                                 onChange={formik.handleChange}
                                 onFocus={() =>
@@ -409,6 +446,7 @@ function Libraryform(props: Props) {
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Language</Text>
                             <Select
                                 name="language"
+                                value={formik?.values?.language}
                                 onChange={formik.handleChange}
                                 onFocus={() =>
                                     formik.setFieldTouched("language", true, true)
@@ -419,11 +457,12 @@ function Libraryform(props: Props) {
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Image</Text>
-                            <ImageSelector setImage={setImageFile} />
+                            <ImageSelector image={data?.thumbnail} setImage={setImageFile} />
                         </Box>
                         <Box w={"full"} >
                             <Text color={"#101928"} fontSize={"14px"} fontWeight={"500"} mb={"1"} >Description</Text>
                             <InputComponent
+                                value={formik?.values?.description}
                                 name="description"
                                 onChange={formik.handleChange}
                                 onFocus={() =>

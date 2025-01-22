@@ -106,7 +106,10 @@ export interface ILibrary {
     Borrowing?: Array<BorrowData>
     borrowId?: string | number,
     table?: boolean,
-    totalCount?: number
+    totalCount?: number,
+    DOI?: string; 
+    ISSN?: string 
+    type?: string
 }  
 
 export interface BorrowData {

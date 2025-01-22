@@ -118,6 +118,21 @@ export function useDeleteRecordCallback() {
     }
   }
   return { handleDeleteRecord }
+} 
+
+export function useDeleteAdminCallback() {
+  const handleDeleteAdmin = async (index: string | number): Promise<any> => {
+    try {
+      const response = await axios.delete(`/admin/${index}`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleDeleteAdmin }
 }
 
 export function useAddBookCallback() {
@@ -163,6 +178,52 @@ export function useAddReportCallback() {
     }
   }
   return { handleAddReport }
+}
+
+
+export function useEditBookCallback() {
+  const handleEditBook = async (postData: object, id: string): Promise<any> => {
+    try {
+      const response = await axios.put(`/record/edit-book/${id}`, postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleEditBook }
+}
+
+export function useEditJornalCallback() {
+  const handleEditJornal = async (postData: object, id: string): Promise<any> => {
+    try {
+      const response = await axios.put(`/record/edit-journal/${id}`, postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleEditJornal }
+}
+
+export function useEditReportCallback() {
+  const handleEditReport = async (postData: object, id: string): Promise<any> => {
+    try {
+      const response = await axios.put(`/record/edit-report/${id}`, postData,
+        {
+          headers: { 'Content-Type': 'application/json' },
+        });
+      return response
+    } catch (err: any) {
+      return err?.response
+    }
+  }
+  return { handleEditReport }
 }
 
 export function useRecordBorrowCallback() {

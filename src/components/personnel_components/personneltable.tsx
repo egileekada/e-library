@@ -7,6 +7,7 @@ import actionService from '../../connections/getdataaction';
 import filterdata from '../../store/filterdata';
 import { capitalizeFLetter } from '../../util/capitalLetter';
 import { cleanup } from '../../util/cleanup';
+import DeleteAdmin from './deleteAdmin';
 
 interface Props {
     tableRef: any
@@ -75,6 +76,7 @@ function Admintable(props: Props) {
                             <Th>Email</Th>
                             <Th>Staff Id</Th>
                             <Th>Phone No.</Th>
+                            <Th>Action</Th>
                         </Tr>
                     </Thead>
                     <Tbody>
@@ -95,6 +97,9 @@ function Admintable(props: Props) {
                                     <Td>{item?.email?.length > 13 ? item?.email.slice(0, 12) + "..." : item?.email}</Td>
                                     <Td>{item?.staffId}</Td>
                                     <Td>{item?.phone}</Td>
+                                    <Td>
+                                        <DeleteAdmin id={item?.id} name={item?.name} />
+                                    </Td>
                                 </Tr>
                             )
                         })}
